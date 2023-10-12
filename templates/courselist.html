@@ -1,23 +1,34 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
-<h2>Course List</h2>
-<h3>current competition courses</h3>
+
 
 <!-- code to display list of courses-->
-<table>
-    <tr>
-        <th>Course</th>
-        <th>Name</th>
-        <th>Map diagram</th>
-    </tr>
-    {% for course in course_list %}
-        <tr>
-            {% for field in course %}
-                <td>{{field}}</td>
+
+
+<div class="p-5 text-center bg-body-tertiary">
+    <div class="container py-5">
+        <h1 class="text-body-emphasis">Course List</h1>
+        <br />
+        <p class="col-lg-8 mx-auto lead">
+            current competition courses
+        </p>
+    </div>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+            {% for course in course_list %}
+            <div class="col">
+                <div class="card border-light text-bg-light shadow-sm mb-3 h-100">
+                    <div class="card-header">
+                        <h5>Course {{course[0]}} - {{course[1]}}</h5>
+                    </div>
+                    <img src="{{ url_for('static', filename=course[2]) }}" class="card-img-top" alt="{{course[2]}}">
+                </div>
+            </div>
             {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
