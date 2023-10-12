@@ -1,12 +1,38 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <!-- driver_list is the variable passed in containing the list of drivers -->
 <!-- Add code to display a list of drivers -->
 
-<h2>Driver List</h2>
+<!-- <h2>Driver List</h2> -->
+<div class="container-fluid">
+    <div class="p-2 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h2 class="display-5 fw-bold">Driver List</h2>
+        </div>
+    </div>
 
-<p>For the Milestone submission, this page just needs to display this text successfully in your browser.</p>
-
-<p>Add the driver list here for your final submission.</p>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Driver ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Age</th>
+                <th scope="col">Caregiver</th>
+                <th scope="col">Car Model</th>
+                <th scope="col">Drive Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in driver_list %}
+            <tr>
+                {% for driver_info in driver %}
+                <td>{{ driver_info }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

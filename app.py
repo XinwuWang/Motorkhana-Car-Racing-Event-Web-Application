@@ -34,7 +34,10 @@ def home():
 @app.route("/listdrivers")
 def listdrivers():
     connection = getCursor()
-    connection.execute("SELECT * FROM driver;")
+    connection.execute("""SELECT driver_id, first_name, surname, date_of_birth, age, caregiver, car.model, car.drive_class
+                       FROM driver
+                       LEFT JOIN car
+                       ON driver.car = car.car_num;""")
     driverList = connection.fetchall()
     print(driverList)
     return render_template("driverlist.html", driver_list=driverList)
@@ -43,8 +46,9 @@ def listdrivers():
 @app.route("/listcourses")
 def listcourses():
     connection = getCursor()
-    connection.execute("SELECT * FROM course;")
+    connection.execute("SELECT * FROM course")
     courseList = connection.fetchall()
+    print(courseList)
     return render_template("courselist.html", course_list=courseList)
 
 
