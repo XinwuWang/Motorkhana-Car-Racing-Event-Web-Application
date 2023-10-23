@@ -33,7 +33,12 @@
         <tbody>
             {% for run in runsList %} {% if run[0] == driver[0] %}
             <tr>
-                <th scope="row">{{ run[1] }}</th>
+                <!-- {% for course in courses %}{% if run[1] == course[0] %}
+                <th scope="row">{{ course[1] }}</th>
+                {% endif %}{% endfor %} -->
+                {% for course in courses %}{% if run[1] == course[0] %}
+                <td>{{ course[1] }}</td>
+                {% endif %}{% endfor %}
                 <td>{{ run[2] }}</td>
                 <td>{{ run[3] }}</td>
                 <td>{{ run[4] }}</td>

@@ -107,6 +107,7 @@ def showgraph():
 def driver_run_detail(driver_id):
     connection = getCursor()
 
+    # Add the run_total column to the database if the column does not exist
     check_column_exists = """SELECT COUNT(*)
     FROM information_schema.columns
     WHERE table_schema='motorkhana'
@@ -117,6 +118,7 @@ def driver_run_detail(driver_id):
         add_column = "ALTER TABLE run ADD run_total FLOAT;"
         connection.execute(add_column)
 
+    # If the run_total column exists, execute query to get the run total results of each run
     connection.execute("SELECT * FROM run")
     runsList = connection.fetchall()
     for run in runsList:
@@ -133,6 +135,7 @@ def driver_run_detail(driver_id):
                 (run_total, run[0], run[1], run[2])
             )
 
+    # Select a driver's information and his/her all runs' details
     connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model, c.drive_class
                        FROM driver d
                        LEFT JOIN car c
@@ -140,11 +143,8 @@ def driver_run_detail(driver_id):
                        WHERE d.driver_id = %s""", (driver_id,))
     driver = connection.fetchone()
 
-    # print(runsList)
-    print(driver)
+    # Get a list of all the courses' information
+    connection.execute("SELECT * FROM course;")
+    courses = connection.fetchall()
 
-    # connection.execute(
-    #     "SELECT * FROM driver WHERE driver_id = %s", (driver_id,))
-    # driver = connection.fetchone()
-    # print(driver)
-    return render_template("driver_detail.html", driver_id=driver_id, driver=driver, runsList=runsList)
+    return render_template("driver_detail.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses)
