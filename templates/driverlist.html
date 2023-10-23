@@ -24,13 +24,31 @@
             </tr>
         </thead>
         <tbody>
-            {% for driver in driver_list %}
-            <tr>
-                {% for driver_info in driver %}
-                <td>{{ driver_info }}</td>
-                {% endfor %}
+            {% for driver in driver_list %}{% if driver[3] and age in range(0, 26)%}
+            <tr class="table-warning">
+                <td>{{ driver[0] }}</td>
+                <td>
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[1] }}</a></td>
+                <td>{{ driver[2] }}</td>
+                <td>{{ driver[3] }}</td>
+                <td>{{ driver[4] }}</td>
+                <td>{{ driver[5] }}</td>
+                <td>{{ driver[6] }}</td>
+                <td>{{ driver[7] }}</td>
             </tr>
-            {% endfor %}
+            {% else %}
+            <tr>
+                <td>{{ driver[0] }}</td>
+                <td>
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[1] }}</a></td>
+                <td>{{ driver[2] }}</td>
+                <td>{{ driver[3] }}</td>
+                <td>{{ driver[4] }}</td>
+                <td>{{ driver[5] }}</td>
+                <td>{{ driver[6] }}</td>
+                <td>{{ driver[7] }}</td>
+            </tr>
+            {% endif %} {% endfor %}
         </tbody>
     </table>
 </div>

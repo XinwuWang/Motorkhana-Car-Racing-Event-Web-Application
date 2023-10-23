@@ -42,8 +42,19 @@ def listdrivers():
                        FROM driver
                        LEFT JOIN car
                        ON driver.car = car.car_num;""")
-    driverList = connection.fetchall()
-    return render_template("driverlist.html", driver_list=driverList)
+    driverList_unsorted = connection.fetchall()
+    driverList = sorted(driverList_unsorted, key=lambda x: (x[2], x[1]))
+
+    for driver in driverList:
+        if driver[3]:
+            print(driver[3].year)
+            # Get the current date and time
+            current_date = datetime.now()
+            # Caculate the age
+            age = current_date.year - \
+                driver[3].year - ((current_date.month, current_date.day)
+                                  < (driver[3].month, driver[3].day))
+    return render_template("driverlist.html", driver_list=driverList, age=age)
 
 
 @app.route("/listcourses")
