@@ -14,8 +14,7 @@
         <thead>
             <tr>
                 <th scope="col">Driver ID</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
+                <th scope="col">Full Name</th>
                 <th scope="col">Date of Birth</th>
                 <th scope="col">Age</th>
                 <th scope="col">Caregiver</th>
@@ -24,12 +23,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for driver in driver_list %}{% if driver[3] and age in range(0, 26)%}
+            {% for driver in driver_list %}{% if driver[4] and driver[4] in range(12, 26)%}
             <tr class="table-warning">
                 <td>{{ driver[0] }}</td>
                 <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[1] }}</a></td>
-                <td>{{ driver[2] }}</td>
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
                 <td>{{ driver[3] }}</td>
                 <td>{{ driver[4] }}</td>
                 <td>{{ driver[5] }}</td>
@@ -40,8 +38,7 @@
             <tr>
                 <td>{{ driver[0] }}</td>
                 <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[1] }}</a></td>
-                <td>{{ driver[2] }}</td>
+                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
                 <td>{{ driver[3] }}</td>
                 <td>{{ driver[4] }}</td>
                 <td>{{ driver[5] }}</td>
