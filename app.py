@@ -162,7 +162,7 @@ def overall_results():
     connection = getCursor()
 
     # Get drivers' ID, first name, last name, and car models
-    connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model
+    connection.execute("""SELECT d.driver_id, d.first_name, d.surname, d.age, c.model
                        FROM driver d
                        LEFT JOIN car c
                        ON d.car=c.car_num""")
@@ -181,8 +181,8 @@ def overall_results():
     # Comapre two runtotals
     for run in runs_info:
         # # If run_total is None, set it to 'dnf'
-        if run[3] is None:
-            list(run)[3] = 'dnf'
+        # if run[3] is None:
+        #     run)[3] = 'dnf'
 
         # Check if (dr_id, crs_id) is in the dictionary
         key = (run[0], run[1])
@@ -203,7 +203,8 @@ def overall_results():
 
     driver_info_dic = {item[0]: {"dr_id": item[0],
                                  "name": item[2] + ", " + item[1],
-                                 "model": item[3]}
+                                 "age": item[3],
+                                 "model": item[4]}
                        for item in driver_info
                        }
 
@@ -223,7 +224,7 @@ def overall_results():
         driver_info_dic[key]["overall"] = round(
             overall_result, 2) if overall_result != "NQ" else "NQ"
 
-    # print(driver_info_dic)
+    # Use the lambda function here to sort the overall results from best to worst, and put NQ at the bottom
     sorted_overall = dict(sorted(driver_info_dic.items(),
                           key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
     print(sorted_overall)

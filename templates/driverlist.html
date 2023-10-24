@@ -9,45 +9,46 @@
             <h2 class="display-5 fw-bold">Driver List</h2>
         </div>
     </div>
-
-    <table class="table table-dark table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Driver ID</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Date of Birth</th>
-                <th scope="col">Age</th>
-                <th scope="col">Caregiver</th>
-                <th scope="col">Car Model</th>
-                <th scope="col">Drive Class</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for driver in driver_list %}{% if driver[4] and driver[4] in range(12, 26)%}
-            <tr class="table-warning">
-                <td>{{ driver[0] }}</td>
-                <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
-                <td>{{ driver[3] }}</td>
-                <td>{{ driver[4] }}</td>
-                <td>{{ driver[5] }}</td>
-                <td>{{ driver[6] }}</td>
-                <td>{{ driver[7] }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td>{{ driver[0] }}</td>
-                <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
-                <td>{{ driver[3] }}</td>
-                <td>{{ driver[4] }}</td>
-                <td>{{ driver[5] }}</td>
-                <td>{{ driver[6] }}</td>
-                <td>{{ driver[7] }}</td>
-            </tr>
-            {% endif %} {% endfor %}
-        </tbody>
-    </table>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Driver ID</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Caregiver</th>
+                    <th scope="col">Car Model</th>
+                    <th scope="col">Drive Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for driver in driver_list %}{% if driver[4] and driver[4] in range(12, 26)%}
+                <tr class="table-warning">
+                    <td>{{ driver[0] }}</td>
+                    <td>
+                        <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
+                    <td>{{ driver[3] }}</td>
+                    <td>{{ driver[4] }}</td>
+                    <td>{{ driver[5] }}</td>
+                    <td>{{ driver[6] }}</td>
+                    <td>{{ driver[7] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td>{{ driver[0] }}</td>
+                    <td>
+                        <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
+                    <td>{{ driver[3] }}</td>
+                    <td>{{ driver[4] }}</td>
+                    <td>{{ driver[5] }}</td>
+                    <td>{{ driver[6] }}</td>
+                    <td>{{ driver[7] }}</td>
+                </tr>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

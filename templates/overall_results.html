@@ -1,6 +1,11 @@
 {% extends "base.html" %} {% block content %}
+<div class="p-2 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Overall Results</h1>
+    </div>
+</div>
 <div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -19,7 +24,11 @@
             {% for key, value in sorted_overall.items() %}
             <tr>
                 <th scope="row">{{ key }}</th>
+                {% if value.age in range(12, 26) %}
+                <td>{{ value.name }} (J)</td>
+                {% else %}
                 <td>{{ value.name }}</td>
+                {% endif %}
                 <td>{{ value.model }}</td>
                 <td>{{ value.A }}</td>
                 <td>{{ value.B }}</td>
