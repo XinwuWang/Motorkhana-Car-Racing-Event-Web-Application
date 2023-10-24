@@ -1,47 +1,47 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html "%} {% block title %}Graph{% endblock %} {% block content %}
 <!-- access Plotly content delivery network (CDN) charting library -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<body>
-    <h1>heading</h1>
-    <div id="myHBarPlot" style="width:100%; max-width:320px;"></div>
+<div class="p-2 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Graph</h1>
+    </div>
+</div>
+<div id="myHBarPlot" style="width:100%; max-width:320px;"></div>
 
-    <script>
-        // Note SPACE after each fruit name so gap before horizontal bars
-        const priceList = [7.25, 8.50, 3.45];
-        const fruitList = ['apple ', 'mango ', 'banana '];
-        // REPLACE constants above with passed in variables.
-        // Use the '|safe' Jinja filter to mark them as safe (prevents your data being html-escaped). eg,
-        // var myList = {{ list_from_py | safe }}
+<script>
+    // Note SPACE after each fruit name so gap before horizontal bars
+    const priceList = [7.25, 8.50, 3.45];
+    const fruitList = ['apple ', 'mango ', 'banana '];
+    // REPLACE constants above with passed in variables.
+    // Use the '|safe' Jinja filter to mark them as safe (prevents your data being html-escaped). eg,
+    // var myList = {{ list_from_py | safe }}
 
-        // Define graph data
-        const data = [{
-            x: priceList,
-            y: fruitList,
-            type: "bar",
-            orientation: "h",
-            marker: {
-                color: "pink"
-            }
-        }];
+    // Define graph data
+    const data = [{
+        x: priceList,
+        y: fruitList,
+        type: "bar",
+        orientation: "h",
+        marker: {
+            color: "pink"
+        }
+    }];
 
-        // Define graph layout. Excluded a y-axis title as fruit names are self-explanatory.
-        const layout = {
-            xaxis: {
-                range: [0, 15],
-                title: "cost"
-            },
-            yaxis: {
-                automargin: true
-            },
-            title: "something"
-        };
+    // Define graph layout. Excluded a y-axis title as fruit names are self-explanatory.
+    const layout = {
+        xaxis: {
+            range: [0, 15],
+            title: "cost"
+        },
+        yaxis: {
+            automargin: true
+        },
+        title: "something"
+    };
 
-        // Display using Plotly
-        Plotly.newPlot("myHBarPlot", data, layout);
-    </script>
+    // Display using Plotly
+    Plotly.newPlot("myHBarPlot", data, layout);
+</script>
 
-</body>
-
-</html>
+{% endblock %}

@@ -12,6 +12,8 @@ import connect
 
 
 app = Flask(__name__)
+# Set a secret key for the session that will be used later.
+app.secret_key = "motorkhana_fast"
 
 dbconn = None
 connection = None
@@ -178,20 +180,34 @@ def overall_results():
 
     # Use the lambda function here to sort the overall results from best to worst, and put NQ at the bottom
     sorted_overall = dict(sorted(driver_info_dic.items(),
-                          key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
+                                 key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
     print(sorted_overall)
+    # Store the overall resutls dictionary in the Flask session object that can be retrieved in the "graph" route later.
     session["sorted_overall"] = sorted_overall
+
     return render_template("overall_results.html", sorted_overall=sorted_overall)
 
 
 @app.route("/graph")
 def showgraph():
-    connection = getCursor()
+    # connection = getCursor()
+
+    # Retrieve the dictionary from the session
+    sorted_overall = session.get("sorted_overall", {})
+    # Sort the overall results dictionary from best to worst
+    sorted_overall_dict = dict(sorted(sorted_overall.items(),
+                                      key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
+
     # Insert code to get top 5 drivers overall, ordered by their final results.
+    top5_drivers = list(sorted_overall_dict.values())[:5]
+
     # Use that to construct 2 lists: bestDriverList containing the names, resultsList containing the final result values
     # Names should include their ID and a trailing space, eg '133 Oliver Ngatai '
-    sorted_overall = session.get("sorted_overall", {})
-    print(sorted_overall)
+    bestDriverList = [
+        f"{driver['dr_id']} {driver['name']} " for driver in top5_drivers]
+    print(bestDriverList)
 
-    return render_template("top5graph.html")
-    # return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
+    resultsList = [driver["overall"] for driver in top5_drivers]
+    print(resultsList)
+
+    return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
