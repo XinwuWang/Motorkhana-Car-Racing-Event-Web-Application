@@ -24,10 +24,11 @@
             </thead>
             <tbody>
                 {% for driver in driver_list %}{% if driver[4] and driver[4] in range(12, 26)%}
+                <!-- If it's Junior, display junior drivers in yellow -->
                 <tr class="table-warning">
                     <td>{{ driver[0] }}</td>
                     <td>
-                        <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
+                        <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }} (J)</a></td>
                     <td>{{ driver[3] }}</td>
                     <td>{{ driver[4] }}</td>
                     <td>{{ driver[5] }}</td>

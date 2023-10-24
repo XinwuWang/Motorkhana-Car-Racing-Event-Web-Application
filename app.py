@@ -95,45 +95,6 @@ def showgraph():
     return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
 
 
-# @app.route("/runinfo")
-# def runinfo():
-#     connection = getCursor()
-#     check_column_exists = """SELECT COUNT(*)
-#     FROM information_schema.columns
-#     WHERE table_schema='motorkhana'
-#     AND table_name='run'
-#     AND column_name='run_total'""".format("motorkhana", "run", "run_total")
-#     connection.execute(check_column_exists)
-#     if not connection.fetchone()[0] > 0:
-#         add_column = "ALTER TABLE run ADD run_total FLOAT;"
-#         connection.execute(add_column)
-
-#     connection.execute("SELECT * FROM run")
-#     runsList = connection.fetchall()
-#     for run in runsList:
-#         if run[3] is not None:
-#             run_total = run[3] + (run[4] or 0) * 5 + (run[5] or 0) * 10
-#             connection.execute(
-#                 "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-#                 (run_total, run[0], run[1], run[2])
-#             )
-#         else:
-#             run_total = None
-#             connection.execute(
-#                 "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-#                 (run_total, run[0], run[1], run[2])
-#             )
-
-#     # connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model, c.drive_class
-#     #                    FROM driver d
-#     #                    LEFT JOIN car c
-#     #                    ON d.car=c.car_num""")
-#     # drivers_info = connection.fetchall()
-#     print(runsList)
-#     # print(drivers_info)
-#     return render_template("runsinfo.html", runs_list=runsList)
-
-
 @app.route("/driver/<int:driver_id>")
 def driver_run_detail(driver_id):
     connection = getCursor()
