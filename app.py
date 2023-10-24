@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import session
 import re
 from datetime import datetime
 import mysql.connector
@@ -83,16 +84,6 @@ def listcourses():
     connection.execute("SELECT * FROM course")
     courseList = connection.fetchall()
     return render_template("courselist.html", course_list=courseList)
-
-
-@app.route("/graph")
-def showgraph():
-    connection = getCursor()
-    # Insert code to get top 5 drivers overall, ordered by their final results.
-    # Use that to construct 2 lists: bestDriverList containing the names, resultsList containing the final result values
-    # Names should include their ID and a trailing space, eg '133 Oliver Ngatai '
-
-    return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
 
 
 @app.route("/driver/<int:driver_id>")
@@ -189,4 +180,18 @@ def overall_results():
     sorted_overall = dict(sorted(driver_info_dic.items(),
                           key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
     print(sorted_overall)
+    session["sorted_overall"] = sorted_overall
     return render_template("overall_results.html", sorted_overall=sorted_overall)
+
+
+@app.route("/graph")
+def showgraph():
+    connection = getCursor()
+    # Insert code to get top 5 drivers overall, ordered by their final results.
+    # Use that to construct 2 lists: bestDriverList containing the names, resultsList containing the final result values
+    # Names should include their ID and a trailing space, eg '133 Oliver Ngatai '
+    sorted_overall = session.get("sorted_overall", {})
+    print(sorted_overall)
+
+    return render_template("top5graph.html")
+    # return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
