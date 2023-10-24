@@ -1,70 +1,72 @@
 {% extends "base.html" %} {% block title %}Overall Results{% endblock %}{% block content %}
-<div class="p-2 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Overall Results</h1>
+<div class="container-fluid">
+    <div class="p-2 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Overall Results</h1>
+        </div>
     </div>
-</div>
-<div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Car Model</th>
-                <th scope="col">Course A</th>
-                <th scope="col">Course B</th>
-                <th scope="col">Course C</th>
-                <th scope="col">Course D</th>
-                <th scope="col">Course E</th>
-                <th scope="col">Course F</th>
-                <th scope="col">Overall</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for key, value in sorted_overall.items() %}
-            <tr>
-                <th scope="row">{{ key }}</th>
-                {% if value.age in range(12, 26) %}
-                <td>
-                    <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=key) }}">{{ value.name }} (J)</a></td>
-                {% else %}
-                <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=key) }}">{{ value.name }}</a></td>
-                {% endif %}
-                <td>{{ value.model }}</td>
-                <td>{{ value.A }}</td>
-                <td>{{ value.B }}</td>
-                <td>{{ value.C }}</td>
-                <td>{{ value.D }}</td>
-                <td>{{ value.E }}</td>
-                <td>{{ value.F }}</td>
-                {% if loop.index == 1 %}
-                <td>
-                    {{ value.overall }} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Car Model</th>
+                    <th scope="col">Course A</th>
+                    <th scope="col">Course B</th>
+                    <th scope="col">Course C</th>
+                    <th scope="col">Course D</th>
+                    <th scope="col">Course E</th>
+                    <th scope="col">Course F</th>
+                    <th scope="col">Overall</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in sorted_overall.items() %}
+                <tr>
+                    <th scope="row">{{ key }}</th>
+                    {% if value.age in range(12, 26) %}
+                    <td>
+                        <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=key) }}">{{ value.name }} (J)</a></td>
+                    {% else %}
+                    <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=key) }}">{{ value.name }}</a></td>
+                    {% endif %}
+                    <td>{{ value.model }}</td>
+                    <td>{{ value.A }}</td>
+                    <td>{{ value.B }}</td>
+                    <td>{{ value.C }}</td>
+                    <td>{{ value.D }}</td>
+                    <td>{{ value.E }}</td>
+                    <td>{{ value.F }}</td>
+                    {% if loop.index == 1 %}
+                    <td>
+                        {{ value.overall }} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
                         <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
                       </svg></td>
-                {% elif loop.index
-                <=5 %} <td>{{ value.overall}} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                    {% elif loop.index
+                    <=5 %} <td>{{ value.overall}} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
                         <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"
                         />
                         </svg></tr>
-            {% else %}
-            <td>{{ value.overall }}</td> {% endif %}
-            </tr>
-            {% endfor %}
+                {% else %}
+                <td>{{ value.overall }}</td> {% endif %}
+                </tr>
+                {% endfor %}
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 
-<!-- Notes for 'dnf', 'NQ', 'Cup', and 'Prize' -->
-<div>
-    <p class="fst-italic"> * 'J' for 'Junior'.</p>
-    <p class="fst-italic"> * 'dnf' for 'did not finish', 'NQ' for 'Not Qualified'.</p>
-    <p class="fst-italic"> * <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+    <!-- Notes for 'dnf', 'NQ', 'Cup', and 'Prize' -->
+    <div>
+        <p class="fst-italic"> * 'J' for 'Junior Drivers'.</p>
+        <p class="fst-italic"> * 'dnf' for 'did not finish', 'NQ' for 'Not Qualified'.</p>
+        <p class="fst-italic"> * <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
         <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
       </svg> for 'Cup', <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
         <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"
         />
         </svg> for 'Prize'.</p>
+    </div>
 </div>
 {% endblock %}

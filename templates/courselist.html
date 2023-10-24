@@ -4,28 +4,28 @@
 
 <!-- code to display list of courses-->
 
-
-<div class="p-2 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Course List</h1>
-        <p class="col-md-8 fs-4">Current competition courses</p>
+<div class="container-fluid">
+    <div class="p-2 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Course List</h1>
+            <p class="col-md-8 fs-4">Current competition courses</p>
+        </div>
     </div>
-</div>
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
-            {% for course in course_list %}
-            <div class="col">
-                <div class="card border-light text-bg-light shadow-sm mb-3 h-100">
-                    <div class="card-header">
-                        <h5>Course {{course[0]}} - {{course[1]}}</h5>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+                {% for course in course_list %}
+                <div class="col">
+                    <div class="card border-light text-bg-light shadow-sm mb-3 h-100">
+                        <div class="card-header">
+                            <h5>Course {{course[0]}} - {{course[1]}}</h5>
+                        </div>
+                        <img src="{{ url_for('static', filename=course[2]) }}" class="card-img-top" alt="{{course[2]}}">
                     </div>
-                    <img src="{{ url_for('static', filename=course[2]) }}" class="card-img-top" alt="{{course[2]}}">
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>
-
 {% endblock %}
