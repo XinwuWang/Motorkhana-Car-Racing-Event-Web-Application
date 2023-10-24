@@ -169,7 +169,6 @@ def overall_results():
 
     driver_info_unsorted = connection.fetchall()
     driver_info = sorted(driver_info_unsorted, key=lambda x: (x[2], x[1]))
-    # print(driver_info)
 
     # Get 6 course times for each driver
     connection.execute("SELECT dr_id, crs_id, run_num, run_total FROM run")
@@ -201,7 +200,6 @@ def overall_results():
     # Convert the dictionary back to a list of tuples
     course_time = [(key[0], key[1], best_run_totals[key])
                    for key in best_run_totals]
-    print(course_time)
 
     driver_info_dic = {item[0]: {"dr_id": item[0],
                                  "name": item[2] + ", " + item[1],
@@ -218,8 +216,15 @@ def overall_results():
         overall_result = 0
         for course_name in ["A", "B", "C", "D", "E", "F"]:
             if driver_info_dic[key][course_name] is not None:
-                overall_result += float(driver_info_dic[key][course_name])
-        driver_info_dic[key]["overall"] = f"{overall_result:.2f}"
+                overall_result += driver_info_dic[key][course_name]
+            else:
+                driver_info_dic[key][course_name] = "dnf"
+                overall_result = "NQ"
+        driver_info_dic[key]["overall"] = round(
+            overall_result, 2) if overall_result != "NQ" else "NQ"
 
-    print(driver_info_dic)
-    return render_template("overall_results.html", driver_info_dic=driver_info_dic)
+    # print(driver_info_dic)
+    sorted_overall = dict(sorted(driver_info_dic.items(),
+                          key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
+    print(sorted_overall)
+    return render_template("overall_results.html", sorted_overall=sorted_overall)

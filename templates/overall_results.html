@@ -16,13 +16,20 @@
             </tr>
         </thead>
         <tbody>
-
+            {% for key, value in sorted_overall.items() %}
             <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
+                <th scope="row">{{ key }}</th>
+                <td>{{ value.name }}</td>
+                <td>{{ value.model }}</td>
+                <td>{{ value.A }}</td>
+                <td>{{ value.B }}</td>
+                <td>{{ value.C }}</td>
+                <td>{{ value.D }}</td>
+                <td>{{ value.E }}</td>
+                <td>{{ value.F }}</td>
+                <td>{{ value.overall }}</td>
             </tr>
+            {% endfor %}
 
         </tbody>
     </table>
