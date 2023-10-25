@@ -241,3 +241,16 @@ def showgraph():
 @app.route("/admin")
 def admin_home():
     return render_template("admin_base.html")
+
+
+@app.route("/admin/junior_list")
+def junior_list():
+    connection = getCursor()
+    connection.execute(
+        "SELECT driver_id, first_name, surname, date_of_birth, age, caregiver FROM driver")
+    all_drivers = connection.fetchall()
+    junior_drivers_unsorted = [(driver_id, first_name, surname, dob,
+                                age, f"{first_name} {surname}" if 12 <= age <= 25 else None) for driver_id, first_name, surname, dob, age, caregiver in all_drivers if 12 <= age <= 25]
+    print(junior_drivers_unsorted)
+
+    return render_template("juniorlist.html")

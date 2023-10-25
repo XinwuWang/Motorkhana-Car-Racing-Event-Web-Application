@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" /> {% if request.path == '/' %}
-    <title>Welcome to the User Portal</title> {% endif %}
+    <title>User Portal</title> {% endif %}
     <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -19,7 +19,7 @@
             </a>
         </div>
     </nav>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
         <div class="container-fluid">
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -55,7 +55,7 @@
                     </li>
                 </ul>
                 <div class="flex-shrink-0">
-                    <a class="nav-link" href="{{ url_for('admin_home') }}">
+                    <a class="icon-link" href="{{ url_for('admin_home') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
                             <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                           </svg> Enter Admin Portal
