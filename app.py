@@ -64,6 +64,7 @@ def home():
     connection.execute("SELECT driver_id, first_name, surname FROM driver")
     drivers_info_unsorted = connection.fetchall()
     drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
+    print(drivers_info)
     return render_template("base.html", drivers_info=drivers_info)
 
 
@@ -77,15 +78,28 @@ def listdrivers():
     driverList_unsorted = connection.fetchall()
     driverList = sorted(driverList_unsorted, key=lambda x: (x[2], x[1]))
 
-    return render_template("driverlist.html", driver_list=driverList)
+    # Create the 'drivers_info' list so on this route users can access the dropdown box in the navigation bar.
+    # Data of this list will be passed to the navigation bar.
+    drivers_info = sorted([(driver[0], driver[1], driver[2])
+                          for driver in driverList], key=lambda x: (x[1], x[2]))
+
+    return render_template("driverlist.html", driver_list=driverList, drivers_info=drivers_info)
 
 
 @app.route("/listcourses")
 def listcourses():
     connection = getCursor()
+
+    # Get data from the course table
     connection.execute("SELECT * FROM course")
     courseList = connection.fetchall()
-    return render_template("courselist.html", course_list=courseList)
+
+    # Get drivers' names and add them to the dropdown box
+    connection.execute("SELECT driver_id, first_name, surname FROM driver")
+    drivers_info_unsorted = connection.fetchall()
+    drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
+
+    return render_template("courselist.html", course_list=courseList, drivers_info=drivers_info)
 
 
 @app.route("/driver/<int:driver_id>")
@@ -108,7 +122,12 @@ def driver_run_detail(driver_id):
     connection.execute("SELECT * FROM course;")
     courses = connection.fetchall()
 
-    return render_template("driver_detail.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses)
+    # Get drivers' names and add them to the dropdown box
+    connection.execute("SELECT driver_id, first_name, surname FROM driver")
+    drivers_info_unsorted = connection.fetchall()
+    drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
+
+    return render_template("driver_detail.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses, drivers_info=drivers_info)
 
 
 @app.route("/overallresults")
@@ -185,12 +204,21 @@ def overall_results():
     # Store the overall resutls dictionary in the Flask session object that can be retrieved in the "graph" route later.
     session["sorted_overall"] = sorted_overall
 
-    return render_template("overall_results.html", sorted_overall=sorted_overall)
+    # Create the 'drivers_info' list so on this route users can access the dropdown box in the navigation bar.
+    # Data of this list will be passed to the navigation bar.
+    drivers_info = sorted([(driver[0], driver[1], driver[2])
+                          for driver in driver_info], key=lambda x: (x[1], x[2]))
+
+    return render_template("overall_results.html", sorted_overall=sorted_overall, drivers_info=drivers_info)
 
 
 @app.route("/graph")
 def showgraph():
-    # connection = getCursor()
+    connection = getCursor()
+    # Get drivers' names and add them to the dropdown box
+    connection.execute("SELECT driver_id, first_name, surname FROM driver")
+    drivers_info_unsorted = connection.fetchall()
+    drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
 
     # Retrieve the dictionary from the session
     sorted_overall = session.get("sorted_overall", {})
@@ -210,4 +238,4 @@ def showgraph():
     resultsList = [driver["overall"] for driver in top5_drivers]
     print(resultsList)
 
-    return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
+    return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList, drivers_info=drivers_info)
