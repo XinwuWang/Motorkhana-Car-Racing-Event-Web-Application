@@ -236,3 +236,8 @@ def showgraph():
     resultsList = [driver["overall"] for driver in top5_drivers]
 
     return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList, drivers_info=drivers_info)
+
+
+@app.route("/admin")
+def admin_home():
+    return render_template("admin_base.html")
