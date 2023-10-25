@@ -233,9 +233,6 @@ def showgraph():
     # Names should include their ID and a trailing space, eg '133 Oliver Ngatai '
     bestDriverList = [
         f"{driver['dr_id']} {driver['name']} " for driver in top5_drivers]
-    print(bestDriverList)
-
     resultsList = [driver["overall"] for driver in top5_drivers]
-    print(resultsList)
 
     return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList, drivers_info=drivers_info)
