@@ -56,7 +56,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form method="post" action="{{ url_for('update_run') }}">
                                     <fieldset disabled>
                                         <div class="mb-3">
                                             <label for="disabledTextInput" class="form-label">Driver ID</label>
@@ -73,22 +73,23 @@
                                     </fieldset>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Seconds</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[3] }}">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[3] }}" name="time">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Cones</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[4] }}">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[4] }}" name="cones_num">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Wrong Direction</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[5] }}">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[5] }}" name="wrong_direction">
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <button type="submit" class="btn btn-dark">Submit</button>
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+
                                     </div>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-dark">Submit</button>
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-
                             </div>
                         </div>
                     </div>

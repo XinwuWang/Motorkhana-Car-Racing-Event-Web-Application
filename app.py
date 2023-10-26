@@ -321,12 +321,15 @@ def driver_data(driver_id):
     return render_template("drivers_page_for_admin.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses)
 
 
-@app.route("/admin/edit/<float:time>/<int:cones>/<int:wd>")
-def edit_run(time, cones, wd):
-    # if time is None:
-    #     time = 0
-    # elif cones is None:
-    #     cones = 0
-    # elif wd is None:
-    #     wd = 0
-    return render_template("edit_run.html", time=time, cones=cones, wd=wd)
+@app.route("/admin/update_runs", methods=["GET", "POST"])
+def update_run():
+    if request.method == "POST":
+        new_time = request.form.get("time")
+        new_cones = request.form.get("cones_num")
+        new_wd = request.form.get("wrong_direction")
+        print(new_time)
+        print(new_cones)
+        print(new_wd)
+
+        return render_template("update_run.html")
+    return render_template("admin_base.html")
