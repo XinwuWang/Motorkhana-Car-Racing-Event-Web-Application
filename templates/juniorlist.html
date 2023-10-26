@@ -1,4 +1,34 @@
 {% extends "admin_base.html" %}{% block title %}Junior List{% endblock %}{% block content%}
-<div>
-    <p>hello</p>
+<div class="container-fluid">
+    <div class="text-center bg-body-tertiary">
+        <div class="container py-5">
+            <h1 class="text-body-emphasis">Junior Driver List</h1>
+        </div>
+    </div>
+    <table class="table table-striped table-hover">
+        <!-- Headings of the junior driver list table -->
+        <thead>
+            <tr>
+                <th scope="col">Driver ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Age</th>
+                <th scope="col">Caregiver</th>
+            </tr>
+        </thead>
+
+        <!-- Data of the table -->
+        <!-- Use Flask to get the data from the 'junior_drivers' list -->
+        <tbody class="table-group-divider">
+            {% for junior in junior_drivers %}
+            <tr>
+                <!-- Loop through each driver's tuple and get each data inside -->
+                {% for item in junior %}
+                <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div> {% endblock %}

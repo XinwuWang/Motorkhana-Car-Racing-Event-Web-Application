@@ -249,8 +249,50 @@ def junior_list():
     connection.execute(
         "SELECT driver_id, first_name, surname, date_of_birth, age, caregiver FROM driver")
     all_drivers = connection.fetchall()
-    junior_drivers_unsorted = [(driver_id, first_name, surname, dob,
-                                age, f"{first_name} {surname}" if 12 <= age <= 25 else None) for driver_id, first_name, surname, dob, age, caregiver in all_drivers if 12 <= age <= 25]
-    print(junior_drivers_unsorted)
 
-    return render_template("juniorlist.html")
+    junior_drivers_unsorted = []
+    for driver in all_drivers:
+        if driver[4] and 12 <= driver[4] <= 25:
+            if driver[4] <= 16:
+                for drivers in all_drivers:
+                    if drivers[0] == driver[5]:
+                        junior_drivers_unsorted.append(
+                            (driver[0], driver[1], driver[2], driver[3], driver[4], drivers[1] + " " + drivers[2]))
+            else:
+                junior_drivers_unsorted.append(
+                    (driver[0], driver[1], driver[2], driver[3], driver[4], None))
+    print(junior_drivers_unsorted)
+    junior_drivers = sorted(junior_drivers_unsorted,
+                            key=lambda x: (x[4], x[2]), reverse=True)
+    print(junior_drivers)
+
+    return render_template("juniorlist.html", junior_drivers=junior_drivers)
+
+
+@app.route("/admin/search_results", methods=["GET", "POST"])
+def search():
+    connection = getCursor()
+    if request.method == "POST":
+        input = request.form.get("search_query")
+        connection.execute("""SELECT d.driver_id, d.first_name, d.surname, d.age, c.model, c.drive_class
+                       FROM driver d
+                       LEFT JOIN car c
+                       ON d.car=c.car_num
+                       WHERE d.first_name LIKE %s OR d.surname LIKE %s""", (f'%{input}%', f'%{input}%'))
+        drivers = connection.fetchall()
+        print(drivers)
+        if drivers:
+            # # Get runs data
+            # connection.execute(
+            #     "SELECT * FROM run WHERE dr_id = %s;", (driver[0],))
+            # run_data = connection.fetchall()
+            # print(run_data)
+
+            # # Get a list of all the courses' information
+            # connection.execute("SELECT * FROM course;")
+            # courses = connection.fetchall()
+            return render_template("search_results.html", drivers=drivers)
+        else:
+            message = f"Could't find '{input}'. Please check your input."
+            return render_template("search_results.html", message=message)
+    return render_template("admin_base.html")
