@@ -279,8 +279,8 @@ def search():
                        LEFT JOIN car c
                        ON d.car=c.car_num
                        WHERE d.first_name LIKE %s OR d.surname LIKE %s""", (f'%{input}%', f'%{input}%'))
-        drivers = connection.fetchall()
-        print(drivers)
+        drivers_unsorted = connection.fetchall()
+        drivers = sorted(drivers_unsorted, key=lambda x: (x[2], x[1]))
         if drivers:
             # # Get runs data
             # connection.execute(
@@ -293,6 +293,33 @@ def search():
             # courses = connection.fetchall()
             return render_template("search_results.html", drivers=drivers)
         else:
-            message = f"Could't find '{input}'. Please check your input."
+            message = f"Sorry...could't find '{input}'. Please check your input. :("
             return render_template("search_results.html", message=message)
     return render_template("admin_base.html")
+
+
+@app.route("/admin/driver_edit/<int:driver_id>")
+def edit_driver(driver_id):
+    connection = getCursor()
+
+    # Get runs list
+    connection.execute("SELECT * FROM run")
+    runsList = connection.fetchall()
+
+    # Select a driver's information and his/her all runs' details
+    connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model, c.drive_class
+                       FROM driver d
+                       LEFT JOIN car c
+                       ON d.car=c.car_num
+                       WHERE d.driver_id = %s""", (driver_id,))
+    driver = connection.fetchone()
+
+    # Get a list of all the courses' information
+    connection.execute("SELECT * FROM course;")
+    courses = connection.fetchall()
+
+    # Get drivers' names and add them to the dropdown box
+    connection.execute("SELECT driver_id, first_name, surname FROM driver")
+    drivers_info_unsorted = connection.fetchall()
+    drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
+    return render_template("edit_driver.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses, drivers_info=drivers_info)

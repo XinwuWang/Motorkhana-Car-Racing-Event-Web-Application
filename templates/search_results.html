@@ -1,8 +1,8 @@
-{% extends "admin_base.html" %} {% block title %}Search Results{% endblock %} {% block content%}
+{% extends "admin_base.html" %} {% block title %}Driver(s){% endblock %} {% block content%}
 <div class="container-fluid">
-    <header class="pb-2 pt-2 mb-4 border-bottom text-body-emphasis">
+    <header class="pb-2 pt-3 mb-4 border-bottom text-body-emphasis">
         <span class="fs-2">
-        <p class="fst-italic fw-light">Search results...</p>
+        <p class="fst-italic fw-light">Driver(s)...</p>
         </span>
         </a>
     </header>
@@ -25,7 +25,7 @@
                             <li>Model: {{ driver[4] }}</li>
                             <li>Class: {{ driver[5] }}</li>
                         </ul>
-                        <button type="button" class="w-50 btn btn-lg btn-outline-primary">Enter</button>
+                        <button type="button" class="w-50 btn btn-lg btn-outline-primary"><a href="{{ url_for('edit_driver', driver_id=driver[0]) }}">Enter</a></button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
     {% else %}
     <div class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">{{ message }}</h1>
+            <h2 class="fw-medium">{{ message }}</h2>
         </div>
     </div>
     {% endif %}
