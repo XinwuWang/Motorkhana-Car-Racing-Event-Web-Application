@@ -324,9 +324,16 @@ def driver_data(driver_id):
 @app.route("/admin/update_runs", methods=["GET", "POST"])
 def update_run():
     if request.method == "POST":
-        new_time = request.form.get("time")
-        new_cones = request.form.get("cones_num")
-        new_wd = request.form.get("wrong_direction")
+        driver_id = request.form.get("driver_id")
+        course_name = request.form.get("course_id")
+        run_number = request.form.get("run_number")
+        new_time = request.form.get("time_edit")
+        new_cones = request.form.get("cones_edit")
+        new_wd = request.form.get("wd_edit")
+
+        print(driver_id)
+        print(course_name)
+        print(run_number)
         print(new_time)
         print(new_cones)
         print(new_wd)

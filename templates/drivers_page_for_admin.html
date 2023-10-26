@@ -57,32 +57,55 @@
                             </div>
                             <div class="modal-body">
                                 <form method="post" action="{{ url_for('update_run') }}">
-                                    <fieldset disabled>
-                                        <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label">Driver ID</label>
-                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ driver_id }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label">Course Name</label> {% for course in courses %} {% if run[1] == course[0] %}
-                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ course[1] }}"> {% endif %} {% endfor %}
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label">Run Number</label>
-                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ run[2] }}">
-                                        </div>
-                                    </fieldset>
+                                    <!-- Admin can read only driver id, the coure name, and the run number. -->
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Seconds</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[3] }}" name="time">
+                                        <label for="dr_idDisplay" class="form-label">Driver ID</label>
+                                        <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" readonly>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Cones</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[4] }}" name="cones_num">
+                                        <label for="crs_idDisplay" class="form-label">Course</label> {% for course in courses %} {% if run[1] == course[0] %}
+                                        <input type="text" id="crs_idDisplay" class="form-control" value="{{ run[1] }} - {{ course[1] }}" name="course_id" readonly> {% endif %} {% endfor %}
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Wrong Direction</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[5] }}" name="wrong_direction">
+                                        <label for="run_numDisplay" class="form-label">Run Number</label>
+                                        <input type="text" id="run_numDisplay" class="form-control" value="{{ run[2] }}" name="run_number" readonly>
                                     </div>
+                                    <!-- ---- -->
+                                    <!-- Admin can edit time, cones, and wd. -->
+                                    <!-- If time is None, admin needs to enter a valid time before submit the form to update data. -->
+                                    {% if run[3] is None %}
+                                    <div class="mb-3">
+                                        <label for="InputTime" class="form-label">Seconds</label>
+                                        <!-- Use the 'step' value to limit two decimal places, 
+                                            the 'min' value to limit minimum time to 0, 
+                                            and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
+                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="0" step="0.01" max="150" required>
+                                        <div id="timeSeconds" class="form-text">* Enter a number equal to or less than 150, e.g. 0, 25, 77.77</div>
+                                    </div>
+                                    <!-- If time is not None, admin can edit time, cones and wd, and then submit the form. -->
+                                    {% else %}
+                                    <div class="mb-3">
+                                        <label for="InputTime" class="form-label">Seconds</label>
+                                        <!-- Use the 'step' value to limit two decimal places, 
+                                            the 'min' value to limit minimum time to 0, 
+                                            and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
+                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="0" step="0.01" max="150">
+                                        <div id="timeSeconds" class="form-text">* Enter a number equal to or less than 150, e.g. 0, 25, 77.77</div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="mb-3">
+                                        <label for="InputCones" class="form-label">Cones</label>
+                                        <!-- Limit cones input to minimum 0 or maximum 20 using 'min' and 'max' -->
+                                        <input type="number" class="form-control" id="InputCones" aria-describedby="conesNum" value="{{ run[4] }}" name="cones_edit" min="0" max="20">
+                                        <div id="conesNum" class="form-text">* Enter a whole number equal to or less than 20, e.g. 0, 4, 13</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="InputWD" class="form-label">Wrong Direction</label>
+                                        <!-- Limit WD input to 0 or 1 using 'min' and 'max' -->
+                                        <input type="number" class="form-control" id="InputWD" aria-describedby="wdNum" value="{{ run[5] }}" name="wd_edit" min="0" max="1">
+                                        <div id="wdNum" class="form-text">* Enter 0 or 1</div>
+                                    </div>
+
                                     <br>
                                     <div>
                                         <button type="submit" class="btn btn-dark">Submit</button>
