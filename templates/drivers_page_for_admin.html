@@ -1,0 +1,110 @@
+{% extends "admin_base.html" %}{% block title %}{{ driver_id }}{% endblock %} {% block content%}
+<div class="container mt-3 marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+        <div class="col-lg-4">
+            <h1 class="fw-normal">{{ driver[1] }} {{ driver[2] }}</h1>
+            <h5 class="fw-normal">Driver ID: {{ driver_id }}</h5>
+            <h5 class="fw-normal">Car Model: {{ driver[3] }}</h5>
+            <h5 class="fw-normal">Driver Class: {{ driver[4] }}</h5>
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Course Name</th>
+                <th scope="col">Run Number</th>
+                <th scope="col">Seconds</th>
+                <th scope="col">Cones</th>
+                <th scope="col">Wrong Direction</th>
+                <th scope="col">Run Total</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in runsList %} {% if run[0] == driver[0] %}
+            <tr>
+                {% for course in courses %} {% if run[1] == course[0] %}
+                <td>{{ course[1] }}</td>
+                {% endif %} {% endfor %}
+                <td>{{ run[2] }}</td>
+                <td>{{ run[3] }}</td>
+                <td>{{ run[4] }}</td>
+                <td>{{ run[5] }}</td>
+                <td>{{ run[6] }}</td>
+                <!-- Button trigger modal for Admin to edit run data -->
+                <!-- ID should be unique. So add 'run[1]-course name' and 'run[2]-run number' to 'data-bs-target' and modal ID. -->
+                <td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ run[1]}}{{ run[2] }}">
+                    Edit
+                  </button>
+                </td>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop{{ run[1]}}{{ run[2] }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel{{ run[1]}}{{ run[2] }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-7" id="staticBackdropLabel">
+                                    Edit Run
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <fieldset disabled>
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput" class="form-label">Driver ID</label>
+                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ driver_id }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput" class="form-label">Course Name</label> {% for course in courses %} {% if run[1] == course[0] %}
+                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ course[1] }}"> {% endif %} {% endfor %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput" class="form-label">Run Number</label>
+                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ run[2] }}">
+                                        </div>
+                                    </fieldset>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Seconds</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[3] }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Cones</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[4] }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Wrong Direction</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{ run[5] }}">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark">Submit</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            {% endif %} {% endfor %}
+
+        </tbody>
+    </table>
+
+
+    <div class="d-grid gap-2 d-md-flex mx-auto">
+        <form class="d-flex" role="search" method="post" action="{{ url_for('search') }}">
+            <input class="form-control me-2" type="hidden" placeholder=" " aria-label="Search" name="search_query">
+            <button class="btn btn-dark text-decoration-none" type="submit">Go back</button>
+        </form>
+        <!-- <button type="button" class="btn btn-dark"><a href="#" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">Overall Results</a></button> -->
+    </div>
+</div>{% endblock %}

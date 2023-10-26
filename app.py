@@ -269,7 +269,7 @@ def junior_list():
     return render_template("juniorlist.html", junior_drivers=junior_drivers)
 
 
-@app.route("/admin/search_results", methods=["GET", "POST"])
+@app.route("/admin/drivers", methods=["GET", "POST"])
 def search():
     connection = getCursor()
     if request.method == "POST":
@@ -298,8 +298,8 @@ def search():
     return render_template("admin_base.html")
 
 
-@app.route("/admin/driver_edit/<int:driver_id>")
-def edit_driver(driver_id):
+@app.route("/admin/drivers/<int:driver_id>")
+def driver_data(driver_id):
     connection = getCursor()
 
     # Get runs list
@@ -318,8 +318,15 @@ def edit_driver(driver_id):
     connection.execute("SELECT * FROM course;")
     courses = connection.fetchall()
 
-    # Get drivers' names and add them to the dropdown box
-    connection.execute("SELECT driver_id, first_name, surname FROM driver")
-    drivers_info_unsorted = connection.fetchall()
-    drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
-    return render_template("edit_driver.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses, drivers_info=drivers_info)
+    return render_template("drivers_page_for_admin.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses)
+
+
+@app.route("/admin/edit/<float:time>/<int:cones>/<int:wd>")
+def edit_run(time, cones, wd):
+    # if time is None:
+    #     time = 0
+    # elif cones is None:
+    #     cones = 0
+    # elif wd is None:
+    #     wd = 0
+    return render_template("edit_run.html", time=time, cones=cones, wd=wd)
