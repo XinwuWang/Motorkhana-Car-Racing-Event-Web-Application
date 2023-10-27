@@ -24,9 +24,11 @@
             {% for junior in junior_drivers %}
             <tr>
                 <!-- Loop through each driver's tuple and get each data inside -->
-                {% for item in junior %}
+                {% for item in junior %} {% if loop.index == 1 %}
+                <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_data', driver_id=item) }}">{{ item }}</a></td>
+                {% else %}
                 <td>{{ item }}</td>
-                {% endfor %}
+                {% endif %} {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
