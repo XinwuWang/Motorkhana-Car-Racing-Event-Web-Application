@@ -251,6 +251,8 @@ def showgraph():
                            )
 
 
+# Admin routes start from here
+# Admin homepage
 @app.route("/admin")
 def admin_home():
     return render_template("admin_base.html")
@@ -281,7 +283,7 @@ def junior_list():
                             key=lambda x: (x[4], x[2]), reverse=True)
     print(junior_drivers)
 
-    return render_template("juniorlist.html", junior_drivers=junior_drivers)
+    return render_template("admin_junior_list.html", junior_drivers=junior_drivers)
 
 
 @app.route("/admin/drivers", methods=["GET", "POST"])
@@ -306,10 +308,10 @@ def search():
             # # Get a list of all the courses' information
             # connection.execute("SELECT * FROM course;")
             # courses = connection.fetchall()
-            return render_template("search_results.html", drivers=drivers)
+            return render_template("admin_search_results.html", drivers=drivers)
         else:
             message = f"Sorry...could't find '{input}'. Please check your input. :("
-            return render_template("search_results.html", message=message)
+            return render_template("admin_search_results.html", message=message)
     return render_template("admin_base.html")
 
 
@@ -336,7 +338,7 @@ def driver_data(driver_id):
     # Get success_message from "update_run"
     success_message = request.args.get("success_message")
 
-    return render_template("drivers_page_for_admin.html",
+    return render_template("admin_driver_page.html",
                            driver_id=driver_id,
                            driver=driver,
                            runsList=runsList,
