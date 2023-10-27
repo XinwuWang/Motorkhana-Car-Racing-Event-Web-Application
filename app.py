@@ -264,16 +264,18 @@ def junior_list():
     all_drivers = connection.fetchall()
 
     junior_drivers_unsorted = []
-    for driver in all_drivers:
+    for driver in all_drivers:  # Loop through 'all_drivers' to get drivers aged between 12 and 25
         if driver[4] and 12 <= driver[4] <= 25:
             if driver[4] <= 16:
-                for drivers in all_drivers:
+                for drivers in all_drivers:  # Loop through 'all_drivers' again
+                    # if caregiver_id matches driver_id,
+                    # append the junior driver's and their caregiver's information as a tuple to the 'junior_drivers_unsorted' list.
                     if drivers[0] == driver[5]:
                         junior_drivers_unsorted.append(
-                            (driver[0], driver[1], driver[2], driver[3], driver[4], drivers[1] + " " + drivers[2]))
+                            (driver[0], driver[1], driver[2], driver[3], driver[4], drivers[1] + " " + drivers[2], drivers[0]))
             else:
                 junior_drivers_unsorted.append(
-                    (driver[0], driver[1], driver[2], driver[3], driver[4], None))
+                    (driver[0], driver[1], driver[2], driver[3], driver[4], None, None))
     print(junior_drivers_unsorted)
     junior_drivers = sorted(junior_drivers_unsorted,
                             key=lambda x: (x[4], x[2]), reverse=True)

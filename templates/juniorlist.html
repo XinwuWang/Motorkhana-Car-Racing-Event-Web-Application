@@ -28,6 +28,12 @@
                     make driver id a link and pass driver id to "driver_data" so admin can easily access the driver's details-->
                 {% for item in junior %} {% if loop.index == 1 %}
                 <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_data', driver_id=item) }}">{{ item }}</a></td>
+                <!-- Add the link to the caregiver's name if there is one -->
+                {% elif item and loop.index == 6 %}
+                <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_data', driver_id=junior[6]) }}">{{ item }}</a></td>
+                {% elif loop.index == 7 %}
+                <!-- Skip caregiver's id and not display it in the frontend, so leave here blank -->
+                <!-- continue -->
                 {% else %}
                 <td>{{ item }}</td>
                 {% endif %} {% endfor %}
