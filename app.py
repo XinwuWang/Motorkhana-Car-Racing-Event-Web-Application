@@ -127,7 +127,13 @@ def driver_run_detail(driver_id):
     drivers_info_unsorted = connection.fetchall()
     drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
 
-    return render_template("driver_detail.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses, drivers_info=drivers_info)
+    return render_template("driver_detail.html",
+                           driver_id=driver_id,
+                           driver=driver,
+                           runsList=runsList,
+                           courses=courses,
+                           drivers_info=drivers_info
+                           )
 
 
 @app.route("/overallresults")
@@ -209,7 +215,10 @@ def overall_results():
     drivers_info = sorted([(driver[0], driver[1], driver[2])
                           for driver in driver_info], key=lambda x: (x[1], x[2]))
 
-    return render_template("overall_results.html", sorted_overall=sorted_overall, drivers_info=drivers_info)
+    return render_template("overall_results.html",
+                           sorted_overall=sorted_overall,
+                           drivers_info=drivers_info
+                           )
 
 
 @app.route("/graph")
@@ -235,7 +244,11 @@ def showgraph():
         f"{driver['dr_id']} {driver['name']} " for driver in top5_drivers]
     resultsList = [driver["overall"] for driver in top5_drivers]
 
-    return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList, drivers_info=drivers_info)
+    return render_template("top5graph.html",
+                           name_list=bestDriverList,
+                           value_list=resultsList,
+                           drivers_info=drivers_info
+                           )
 
 
 @app.route("/admin")
@@ -318,25 +331,44 @@ def driver_data(driver_id):
     connection.execute("SELECT * FROM course;")
     courses = connection.fetchall()
 
-    return render_template("drivers_page_for_admin.html", driver_id=driver_id, driver=driver, runsList=runsList, courses=courses)
+    # Get success_message from "update_run"
+    success_message = request.args.get("success_message")
+
+    return render_template("drivers_page_for_admin.html",
+                           driver_id=driver_id,
+                           driver=driver,
+                           runsList=runsList,
+                           courses=courses,
+                           success_message=success_message
+                           )
 
 
-@app.route("/admin/update_runs", methods=["GET", "POST"])
+@app.route("/admin/update_run", methods=["GET", "POST"])
 def update_run():
+    connection = getCursor()
     if request.method == "POST":
         driver_id = request.form.get("driver_id")
-        course_name = request.form.get("course_id")
+        # Get the first item that is the course ID in the course input string
+        course_name = request.form.get("course_id")[0]
         run_number = request.form.get("run_number")
         new_time = request.form.get("time_edit")
-        new_cones = request.form.get("cones_edit")
-        new_wd = request.form.get("wd_edit")
+        cones_input = request.form.get("cones_edit")
+        # Check if a valid number is entered for cones
+        # If the cones input is empty, set default value to None
+        new_cones = cones_input if cones_input else None
+        wd_input = request.form.get("wd_edit")
+        # Check if a valid number is entered for wd
+        # If the wd input is empty, set default value to 0
+        new_wd = wd_input if wd_input else 0
+        run_total = float(new_time) + (float(new_cones)
+                                       if new_cones else 0) * 5 + float(new_wd) * 10
 
-        print(driver_id)
-        print(course_name)
-        print(run_number)
-        print(new_time)
-        print(new_cones)
-        print(new_wd)
+        # Update run data in MySQL database
+        update_data_query = "UPDATE run SET seconds=%s, cones=%s, wd=%s, run_total=%s WHERE dr_id=%s AND crs_id=%s AND run_num=%s"
+        connection.execute(update_data_query, (new_time, new_cones,
+                           new_wd, run_total, driver_id, course_name, run_number))
 
-        return render_template("update_run.html")
-    return render_template("admin_base.html")
+        success_message = "✓ Yay!! You have successfully updated run data."
+
+        # Go back to the driver's info page after updating run data
+        return redirect(url_for("driver_data", driver_id=driver_id, success_message=success_message))

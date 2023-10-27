@@ -1,4 +1,13 @@
 {% extends "admin_base.html" %}{% block title %}{{ driver_id }}{% endblock %} {% block content%}
+<!-- Check if data has been updated and message has been sent out from "update_run" to "driver_data" -->
+{% if success_message %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
+    <div class="d-flex justify-content-between align-items-center">
+        {{ success_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endif %}
 <div class="container mt-3 marketing">
 
     <!-- Three columns of text below the carousel -->
@@ -72,32 +81,20 @@
                                     </div>
                                     <!-- ---- -->
                                     <!-- Admin can edit time, cones, and wd. -->
-                                    <!-- If time is None, admin needs to enter a valid time before submit the form to update data. -->
-                                    {% if run[3] is None %}
+                                    <!-- Time is required before submitting the form. -->
                                     <div class="mb-3">
                                         <label for="InputTime" class="form-label">Seconds</label>
                                         <!-- Use the 'step' value to limit two decimal places, 
-                                            the 'min' value to limit minimum time to 0, 
+                                            the 'min' value to limit minimum time to 20 as the fastest time in the database is 22, 
                                             and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
-                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="0" step="0.01" max="150" required>
-                                        <div id="timeSeconds" class="form-text">* Enter a number equal to or less than 150, e.g. 0, 25, 77.77</div>
+                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="20" step="0.01" max="150" required>
+                                        <div id="timeSeconds" class="form-text">* Enter a number between 20 and 150, e.g. 25, 77.77</div>
                                     </div>
-                                    <!-- If time is not None, admin can edit time, cones and wd, and then submit the form. -->
-                                    {% else %}
-                                    <div class="mb-3">
-                                        <label for="InputTime" class="form-label">Seconds</label>
-                                        <!-- Use the 'step' value to limit two decimal places, 
-                                            the 'min' value to limit minimum time to 0, 
-                                            and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
-                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="0" step="0.01" max="150">
-                                        <div id="timeSeconds" class="form-text">* Enter a number equal to or less than 150, e.g. 0, 25, 77.77</div>
-                                    </div>
-                                    {% endif %}
                                     <div class="mb-3">
                                         <label for="InputCones" class="form-label">Cones</label>
                                         <!-- Limit cones input to minimum 0 or maximum 20 using 'min' and 'max' -->
                                         <input type="number" class="form-control" id="InputCones" aria-describedby="conesNum" value="{{ run[4] }}" name="cones_edit" min="0" max="20">
-                                        <div id="conesNum" class="form-text">* Enter a whole number equal to or less than 20, e.g. 0, 4, 13</div>
+                                        <div id="conesNum" class="form-text">* Enter a whole number equal to or less than 20, e.g. 2, 13</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="InputWD" class="form-label">Wrong Direction</label>
