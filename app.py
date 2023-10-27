@@ -374,3 +374,8 @@ def update_run():
 
         # Go back to the driver's info page after updating run data
         return redirect(url_for("driver_data", driver_id=driver_id, success_message=success_message))
+
+
+@app.route("/admin/add_driver", methods=["GET", "POST"])
+def add_driver():
+    return render_template("admin_add_driver.html")
