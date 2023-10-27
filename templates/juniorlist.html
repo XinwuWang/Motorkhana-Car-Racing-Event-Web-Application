@@ -24,6 +24,8 @@
             {% for junior in junior_drivers %}
             <tr>
                 <!-- Loop through each driver's tuple and get each data inside -->
+                <!-- Get the first item of each tuple which is driver id, 
+                    make driver id a link and pass driver id to "driver_data" so admin can easily access the driver's details-->
                 {% for item in junior %} {% if loop.index == 1 %}
                 <td><a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_data', driver_id=item) }}">{{ item }}</a></td>
                 {% else %}
