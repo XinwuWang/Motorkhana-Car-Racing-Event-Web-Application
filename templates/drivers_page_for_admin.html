@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}{% block title %}{{ driver_id }}{% endblock %} {% block content%}
+{% extends "admin_base.html" %}{% block title %}{{ driver_id }}-{{ driver[1] }} {{ driver[2] }}{% endblock %} {% block content%}
 <!-- Check if data has been updated and message has been sent out from "update_run" to "driver_data" -->
 {% if success_message %}
 <div class="alert alert-success alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
@@ -13,7 +13,13 @@
     <!-- Three columns of text below the carousel -->
     <div class="row">
         <div class="col-lg-4">
+            <!-- Check if it's a junior driver -->
+            <!-- If yes, add '(J)' to his name -->
+            {% if driver[5] and driver[5] in range(12, 26)%}
+            <h1 class="fw-normal">{{ driver[1] }} {{ driver[2] }} (J)</h1>
+            {% else %}
             <h1 class="fw-normal">{{ driver[1] }} {{ driver[2] }}</h1>
+            {% endif %}
             <h5 class="fw-normal">Driver ID: {{ driver_id }}</h5>
             <h5 class="fw-normal">Car Model: {{ driver[3] }}</h5>
             <h5 class="fw-normal">Driver Class: {{ driver[4] }}</h5>
@@ -50,7 +56,7 @@
                 <td>{{ run[6] }}</td>
                 <!-- Button trigger modal for Admin to edit run data -->
                 <!-- ID should be unique. So add 'run[1]-course name' and 'run[2]-run number' to 'data-bs-target' and modal ID. -->
-                <td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ run[1]}}{{ run[2] }}">
+                <td><button type="button" class="btn btn-secondary btn-sm text-bg-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ run[1]}}{{ run[2] }}">
                     Edit
                   </button>
                 </td>

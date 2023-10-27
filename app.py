@@ -320,7 +320,7 @@ def driver_data(driver_id):
     runsList = connection.fetchall()
 
     # Select a driver's information and his/her all runs' details
-    connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model, c.drive_class
+    connection.execute("""SELECT d.driver_id, d.first_name, d.surname, c.model, c.drive_class, d.age
                        FROM driver d
                        LEFT JOIN car c
                        ON d.car=c.car_num
