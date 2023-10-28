@@ -116,29 +116,6 @@
         </div>
     </div>
 
-
-
-    <!-- <div class="modal fade" id="checkjuniorModal" tabindex="-1" aria-labelledby="checkjuniorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                      </svg>
-                    <h1 class="modal-title fs-5 px-2" id="exampleModalLabel">Add Driver</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5 class="m-3 p-3">Is the new driver a junior? (aged 12-25)</h5>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <a href="{{ url_for('add_driver') }}"><button type="button" class="btn btn-dark mx-2 mb-3">No</button></a>
-                    <a href="{{ url_for('add_junior_driver') }}"><button type="button" class="btn btn-secondary mx-2 mb-3">Yes</button></a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- If the admin successfully adds a new driver, here displays a success message -->
     {% if success_add_message %}
     <div class="alert alert-info alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
@@ -167,20 +144,42 @@
                 <h1 class="display-5 fw-bold">Welcome to the Admin Portal!</h1>
             </div>
         </div>
-
         <div class="row align-items-md-stretch">
-            <div class="col-md-6">
+            <div class="col-md-6 py-3">
                 <div class="h-100 p-5 text-bg-dark rounded-3">
-                    <h2>Change the background</h2>
-                    <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
-                    <button class="btn btn-outline-light" type="button">Example button</button>
+                    <h2>Junior List</h2>
+                    <p>View all registered junior drivers.</p>
+                    <a href="{{ url_for('junior_list') }}">
+                        <button class="btn btn-outline-light" type="button">View</button>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 py-3">
                 <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-                    <h2>Add borders</h2>
-                    <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
-                    <button class="btn btn-outline-secondary" type="button">Example button</button>
+                    <h2>All Drivers</h2>
+                    <p>View all current registered drivers.</p>
+                    <form class="d-flex" role="search" method="post" action="{{ url_for('search') }}">
+                        <input class="form-control me-2" type="hidden" placeholder=" " aria-label="Search" name="search_query">
+                        <button class="btn btn-outline-secondary text-bg-dark" type="submit">View</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6 py-3">
+                <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                    <h2>Add Driver</h2>
+                    <p>Add a new driver.</p>
+                    <button class="btn btn-outline-secondary text-bg-dark" type="submit" data-bs-toggle="modal" data-bs-target="#checkjuniorModal">Add</button>
+                </div>
+            </div>
+            <div class="col-md-6 py-3">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <h2>Log out</h2>
+                    <p>Leave the Admin Portal and return to the User Portal.</p>
+                    <a href="{{ url_for('home') }}">
+                        <button class="btn btn-outline-light" type="button">View</button>
+                    </a>
                 </div>
             </div>
         </div>
