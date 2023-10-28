@@ -87,10 +87,19 @@
         </div>
     </div>
 
+    <!-- If the admin successfully adds a new driver, here displays a success message -->
+    {% if success_add_message %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
+        <div class="d-flex justify-content-between align-items-center">
+            {{ success_add_message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endif %}
 
-    <!-- Home page background image -->
+    <!-- Home page content -->
     {% if request.path == '/admin' %}
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-3">
         <header class="pb-3 mb-4 border-bottom text-body-emphasis d-flex align-items-center">
             <!-- <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none"> -->
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">

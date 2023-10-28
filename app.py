@@ -255,7 +255,12 @@ def showgraph():
 # Admin homepage
 @app.route("/admin")
 def admin_home():
-    return render_template("admin_base.html")
+
+    # After admin adds a new user, the admin dashboard will display a success message.
+    # Here get the messaged passed from 'add_driver'
+    success_add_message = request.args.get("success_add_message")
+
+    return render_template("admin_base.html", success_add_message=success_add_message)
 
 
 @app.route("/admin/junior_list")
@@ -385,16 +390,29 @@ def add_driver():
     connection.execute("SELECT * FROM car")
     cars = connection.fetchall()
 
+    # If admin submits the form, get data he has entered.
+    # Lower all the input first and then capitalise the 'first_name' and 'surname'
     if request.method == "POST":
-        add_fname = request.form.get("add_fname")
-        add_sname = request.form.get("add_sname")
+        add_fname = request.form.get("add_fname").lower().capitalize()
+        add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
 
         print(add_fname)
         print(add_sname)
         print(add_carinfo)
 
-        return redirect(url_for("admin_home"))
+        # There might be possibilities of two drivers having the same first name and surname,
+        # therefore I chose not to check if admin enters a fullname that already exists in the database.
+        # As long as each driver has a unique id number.
+        connection.execute(
+            """INSERT INTO driver
+            VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+            (connection.lastrowid, add_fname,
+             add_sname, None, None, None, add_carinfo)
+        )
+
+        success_add_message = f"Hooray!! The new driver '{add_fname} {add_sname}' has been successfully added!"
+        return redirect(url_for("admin_home", success_add_message=success_add_message))
     return render_template("admin_add_driver.html", cars=cars)
 
 
@@ -414,9 +432,11 @@ def add_junior_driver():
     # Sort caregivers by their surname
     caregivers = sorted(caregivers_unsorted, key=lambda x: (x[2], x[1]))
 
+    # If admin submits the form, get data he has entered.
+    # Lower all the input first and then capitalise the 'first_name' and 'surname'
     if request.method == "POST":
-        add_fname = request.form.get("add_fname")
-        add_sname = request.form.get("add_sname")
+        add_fname = request.form.get("add_fname").lower().capitalize()
+        add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
         add_dobirth = request.form.get("add_dobirth")
         add_caregiver = request.form.get("add_caregiver")
