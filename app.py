@@ -396,6 +396,7 @@ def add_driver():
         add_fname = request.form.get("add_fname").lower().capitalize()
         add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
+        new_drID = connection.lastrowid
 
         print(add_fname)
         print(add_sname)
@@ -404,10 +405,11 @@ def add_driver():
         # There might be possibilities of two drivers having the same first name and surname,
         # therefore I chose not to check if admin enters a fullname that already exists in the database.
         # As long as each driver has a unique id number.
+        # Insert the new driver's information into the 'driver' table
         connection.execute(
             """INSERT INTO driver
             VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-            (connection.lastrowid, add_fname,
+            (new_drID, add_fname,
              add_sname, None, None, None, add_carinfo)
         )
 
