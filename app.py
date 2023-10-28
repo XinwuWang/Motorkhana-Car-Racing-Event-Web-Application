@@ -411,6 +411,7 @@ def add_driver():
              add_sname, None, None, None, add_carinfo)
         )
 
+        # Pass a success message to 'admin_home' after admin adds a new driver
         success_add_message = f"Hooray!! The new driver '{add_fname} {add_sname}' has been successfully added!"
         return redirect(url_for("admin_home", success_add_message=success_add_message))
     return render_template("admin_add_driver.html", cars=cars)
