@@ -93,19 +93,19 @@
                                         <!-- Use the 'step' value to limit two decimal places, 
                                             the 'min' value to limit minimum time to 20 as the fastest time in the database is 22, 
                                             and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
-                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min="20" step="0.01" max="150" required>
+                                        <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min=20 step=0.01 max=150 required>
                                         <div id="timeSeconds" class="form-text">-Enter a number between 20 and 150, e.g. 25, 77.77</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="InputCones" class="form-label">Cones</label>
                                         <!-- Limit cones input to minimum 0 or maximum 20 using 'min' and 'max' -->
-                                        <input type="number" class="form-control" id="InputCones" aria-describedby="conesNum" value="{{ run[4] }}" name="cones_edit" min="0" max="20">
+                                        <input type="number" class="form-control" id="InputCones" aria-describedby="conesNum" value="{{ run[4] }}" name="cones_edit" min=0 max=20>
                                         <div id="conesNum" class="form-text">-Enter a whole number equal to or less than 20, e.g. 2, 13</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="InputWD" class="form-label">Wrong Direction</label>
                                         <!-- Limit WD input to 0 or 1 using 'min' and 'max' -->
-                                        <input type="number" class="form-control" id="InputWD" aria-describedby="wdNum" value="{{ run[5] }}" name="wd_edit" min="0" max="1">
+                                        <input type="number" class="form-control" id="InputWD" aria-describedby="wdNum" value="{{ run[5] }}" name="wd_edit" min=0 max=1>
                                         <div id="wdNum" class="form-text">-Enter 0 or 1</div>
                                     </div>
 

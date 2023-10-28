@@ -1,11 +1,10 @@
-{% extends "admin_base.html" %}{% block title %}Add Driver{% endblock %} {% block content%}
+{% extends "admin_base.html" %}{% block title %}Add a Junior Driver{% endblock %} {% block content%}
 <div class="container">
     <div class="bg-body-tertiary">
         <div class="container-fluid py-5">
-            <h1 class="text-body-emphasis">Add a New Driver</h1>
+            <h1 class="text-body-emphasis">Add a New Junior Driver</h1>
         </div>
     </div>
-
 
     <form method="post" action="{{ url_for('add_driver') }}">
         <div class="container border p-3">
@@ -23,7 +22,9 @@
                     </label>
                     <input type="text" id="add_sname" class="form-control" placeholder="Enter a surname" name="add_sname" maxlength="20" pattern="[a-zA-Z]*" required>
                 </div>
-                <div class="col-md-1"></div>
+            </div>
+
+            <div class="row m-3 pt-3">
                 <div class="col-md-3">
                     <label for="add_carinfo" class="form-label">
                         Select a car*
@@ -36,16 +37,41 @@
                     </select>
                 </div>
             </div>
+            <div class="row m-3 pt-3">
+                <div class="col-md-3">
+                    <label for="add_dobirth" class="form-label">
+                            Date of birth* 
+                    </label>
+                    <input type="date" id="add_dobirth" class="form-control" name="add_dobirth" max="2012-12-31" required>
+                </div>
+            </div>
 
-            <!-- 'submit' and 'reset' buttons -->
-            <div class="row m-3 py-5 ">
-                <div class="col text-center ">
-                    <button type="submit " class="btn btn-dark ">Submit</button>
-                    <button type="reset" class="btn btn-light ms-3 ">Reset</button>
+            <!-- If age is equal to or less than 16, then admin needs to select a caregiver. -->
+            <div class="row m-3 pt-3">
+                <div class="col-md-3">
+                    <label for="add_caregiver" class="form-label">
+                        Select a caregiver*
+                    </label>
+                    <select id="add_caregiver" name="add_caregiver" class="form-select" required>
+                        <option value="" disabled selected></option>
+                        {% for caregiver in caregivers %}
+                        <option value="{{ caregiver[0] }}">{{ caregiver[1]}} {{ caregiver[2] }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>
+
+        <!-- 'submit' and 'reset' buttons -->
+        <div class="row m-3 py-3 ">
+            <div class="col text-center ">
+                <button type="submit " class="btn btn-dark ">Submit</button>
+                <button type="reset" class="btn btn-light ms-3 " data-bs-dismiss="modal ">Reset</button>
+            </div>
+        </div>
     </form>
+</div>
+
 
 </div>
 {% endblock %}

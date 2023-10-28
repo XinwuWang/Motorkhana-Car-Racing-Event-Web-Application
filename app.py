@@ -381,8 +381,52 @@ def update_run():
 @app.route("/admin/add_driver", methods=["GET", "POST"])
 def add_driver():
     connection = getCursor()
+    # Get all cars' data
+    connection.execute("SELECT * FROM car")
+    cars = connection.fetchall()
+
     if request.method == "POST":
-        add_fn = request.form.get("add_fname")
-        print(add_fn)
+        add_fname = request.form.get("add_fname")
+        add_sname = request.form.get("add_sname")
+        add_carinfo = request.form.get("add_carinfo")
+
+        print(add_fname)
+        print(add_sname)
+        print(add_carinfo)
+
         return redirect(url_for("admin_home"))
-    return render_template("admin_add_driver.html")
+    return render_template("admin_add_driver.html", cars=cars)
+
+
+@app.route("/admin/is_junior", methods=["GET", "POST"])
+def add_junior_driver():
+    connection = getCursor()
+    # Get all cars' data
+    connection.execute("SELECT * FROM car")
+    cars = connection.fetchall()
+
+    # Get all drivers who are eligible to be a caregiver
+    # Drivers with no date_of_birth data are seen as eligible caregivers as only juniors are required to enter DOB data
+    connection.execute("""SELECT driver_id, first_name, surname, date_of_birth 
+                       FROM driver 
+                       WHERE date_of_birth IS NULL""")
+    caregivers_unsorted = connection.fetchall()
+    # Sort caregivers by their surname
+    caregivers = sorted(caregivers_unsorted, key=lambda x: (x[2], x[1]))
+
+    if request.method == "POST":
+        add_fname = request.form.get("add_fname")
+        add_sname = request.form.get("add_sname")
+        add_carinfo = request.form.get("add_carinfo")
+        add_dobirth = request.form.get("add_dobirth")
+        add_caregiver = request.form.get("add_caregiver")
+
+        print(add_fname)
+        print(add_sname)
+        print(add_carinfo)
+        print(add_dobirth)
+        print(add_caregiver)
+
+        return redirect(url_for("admin_home"))
+
+    return render_template("admin_add_junior_driver.html", cars=cars, caregivers=caregivers)
