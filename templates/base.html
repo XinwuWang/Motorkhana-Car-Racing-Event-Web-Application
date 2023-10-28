@@ -1,15 +1,22 @@
+<!-- Base template for all public interface templates -->
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8" /> {% if request.path == '/' %}
-    <title>User Portal</title> {% endif %}
+    <meta charset="utf-8" />
+    <!-- Only display on the homepage of the public interface -->
+    {% if request.path == '/' %}
+    <title>User Portal</title>
+    {% endif %}
+    <!-- Other public interfaces display their own title. -->
     <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
+    <!-- Head for all public interfaces. Users can return to the public homepage easily when clicking this header -->
     <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('home') }}"> USER PORTAL - 
@@ -19,6 +26,8 @@
             </a>
         </div>
     </nav>
+
+    <!-- Navigation bar for all public interfaces -->
     <nav class="navbar navbar-expand-lg bg-body-secondary">
         <div class="container-fluid">
             </button>
@@ -28,23 +37,19 @@
                         <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('listdrivers') }}">List Drivers</a>
+                        <a class="nav-link" href="{{ url_for('listdrivers') }}">Driver List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('listcourses') }}">List Courses</a>
+                        <a class="nav-link" href="{{ url_for('listcourses') }}">Course List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('overall_results') }}">Overall Results</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Drivers
-            </a>
+                            Run Detail
+                        </a>
                         <ul class="dropdown-menu">
-                            <!-- <li><a class="dropdown-item" href="#">Overall results</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li> -->
                             {% for driver in drivers_info %}
                             <li><a class="dropdown-item" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[1] }} {{ driver[2] }}</a></li>
                             {% endfor %}
@@ -54,6 +59,7 @@
                         <a class="nav-link" href="{{ url_for('showgraph') }}">Top 5 Graph</a>
                     </li>
                 </ul>
+                <!-- Link controlling the modal to enter the admin portal -->
                 <div class="flex-shrink-0">
                     <a class="icon-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
@@ -65,7 +71,7 @@
         </div>
     </nav>
 
-    <!-- Modal -->
+    <!-- Modal for entering the admin portal-->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -105,20 +111,59 @@
             </div>
         </div>
     </div>
-    <!-- Home page background image -->
-    {% if request.path == '/' %}
-    <div class="position-relative overflow-hidden p-3 p-md-5 text-center bg-body-tertiary">
-        <div class="col-md-6 p-lg-5 mx-auto my-5">
-            <h1 class="display-3 fw-bold">Welcome to the Motorkhana Event!</h1>
-            <br />
-            <h3 class="fw-normal text-muted mb-3">Faster Like Never Before</h3>
-        </div>
-        <div>
-            <img src="{{ url_for('static', filename='home_bg.jpg') }}" class="img-fluid" alt="racing car">
-        </div>
-    </div>
 
+    <!-- Displayed on the public home page only -->
+    {% if request.path == '/' %}
+    <div id="myCarousel" class="carousel slide mb-6 pointer-event" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <rect width="100%" height="80%" fill="var(--bs-secondary-color)"><img src="{{ url_for('static', filename='home_bg.jpg') }}" class="img-fluid" alt="home page image one welcome" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></rect>
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1 class="display-3 fw-bold">Welcome to the Motorkhana Event!</h1>
+                        <p class="opacity-75">Enjoy fast and furious!</p>
+                        <p><a class="btn btn-lg btn-outline-light btn-dark" href="{{ url_for('listdrivers') }}">View All Drivers</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <rect width="100%" height="80%" fill="var(--bs-secondary-color)"><img src="{{ url_for('static', filename='home_bg2.jpg') }}" class="img-fluid" alt="home page image two courses" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></rect>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1 class="display-3 fw-bold">Six Eciting Courses</h1>
+                        <p>Bringing out a monster</p>
+                        <p><a class="btn btn-lg btn-outline-light btn-dark" href="{{ url_for('listcourses') }}">View Courses</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item active">
+                <rect width="100%" height="80%" fill="var(--bs-secondary-color)"><img src="{{ url_for('static', filename='home_bg3.jpg') }}" class="img-fluid" alt="home page image three overall results" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></rect>
+                <div class="container">
+                    <div class="carousel-caption text-end">
+                        <h1 class="display-3 fw-bold">Win a Cup!</h1>
+                        <p>The speed party has just begun.</p>
+                        <p><a class="btn btn-lg btn-outline-light btn-dark" href="{{ url_for('showgraph') }}">View Winners</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     {% endif %}
+
+    <!-- Content to display in each public template -->
     <section class="content">
         <header>
             {% block header %}{% endblock %}
@@ -128,9 +173,17 @@
         {% endfor %} {% block content %}{% endblock %}
     </section>
 
+    <!-- Footer for all public interfaces -->
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <!-- Shortcut to the public home interface -->
+            <li class="nav-item">
+                <a href="{{ url_for('home') }}" class="nav-link px-2 m-1 text-body-secondary d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house me-1" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+                    </svg> Home
+                </a>
+            </li>
         </ul>
         <p class="text-center text-body-secondary">© 2023 Xinwu Wang-1154492, Lincoln University</p>
     </footer>
@@ -138,7 +191,6 @@
     <!-- Bootstrap's JavaScript bundle including Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>

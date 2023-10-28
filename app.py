@@ -1,3 +1,7 @@
+# COMP636 Motorkhana Event Assignment
+# Name: Xinwu Wang
+# Student ID: 1154492
+
 from flask import Flask
 from flask import render_template
 from flask import request
