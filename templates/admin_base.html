@@ -66,7 +66,59 @@
     </nav>
 
     <!-- Modal asking if adding a new junior driver -->
-    <div class="modal fade" id="checkjuniorModal" tabindex="-1" aria-labelledby="checkjuniorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="checkjuniorModal" aria-hidden="true" aria-labelledby="checkjuniorModalLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                      </svg>
+                    <h1 class="modal-title fs-5 px-2" id="checkjuniorModal">Add a new driver</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="m-3 p-3">Is the new driver a junior? (aged 12-25)</h5>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ url_for('add_driver') }}"><button type="button" class="btn btn-dark mx-2 mb-3">No</button></a>
+                    <button type="button" class="btn btn-secondary mx-2 mb-3" data-bs-target="#ask_dateofbirth" data-bs-toggle="modal">Yes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ask_dateofbirth" aria-hidden="true" aria-labelledby="ask_dateofbirthLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                      </svg>
+                    <h1 class="modal-title fs-5 px-2" id="ask_dateofbirth">Please select the date of birth</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ url_for('add_junior_driver') }}">
+                        <div class="col p-3">
+                            <label for="add_dobirth" class="form-label">
+                                    Date of birth* 
+                            </label>
+                            <input type="date" id="add_dobirth" class="form-control" name="add_dobirth" max="2012-12-31" required>
+                        </div>
+                        <div class="d-flex p-3  justify-content-center">
+                            <button type="submit" class="btn btn-dark mx-2 mb-3">Submit</button>
+                            <button class="btn btn-secondary mx-2 mb-3" data-bs-target="#checkjuniorModal" data-bs-toggle="modal">Back to first</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="modal fade" id="checkjuniorModal" tabindex="-1" aria-labelledby="checkjuniorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,11 +133,11 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="{{ url_for('add_driver') }}"><button type="button" class="btn btn-dark mx-2 mb-3">No</button></a>
-                    <a href="{{ url_for('add_junior_driver') }}"><button type="submit" class="btn btn-secondary mx-2 mb-3">Yes</button></a>
+                    <a href="{{ url_for('add_junior_driver') }}"><button type="button" class="btn btn-secondary mx-2 mb-3">Yes</button></a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- If the admin successfully adds a new driver, here displays a success message -->
     {% if success_add_message %}

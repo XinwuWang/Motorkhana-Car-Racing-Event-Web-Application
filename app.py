@@ -5,7 +5,7 @@ from flask import redirect
 from flask import url_for
 from flask import session
 import re
-from datetime import datetime
+from datetime import datetime, date
 import mysql.connector
 from mysql.connector import FieldType
 import connect
@@ -396,22 +396,35 @@ def add_driver():
         add_fname = request.form.get("add_fname").lower().capitalize()
         add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
-        new_drID = connection.lastrowid
-
-        print(add_fname)
-        print(add_sname)
-        print(add_carinfo)
 
         # There might be possibilities of two drivers having the same first name and surname,
         # therefore I chose not to check if admin enters a fullname that already exists in the database.
         # As long as each driver has a unique id number.
         # Insert the new driver's information into the 'driver' table
+        # Generate a new id for the user using the 'lastrowid' property
         connection.execute(
             """INSERT INTO driver
             VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-            (new_drID, add_fname,
+            (connection.lastrowid, add_fname,
              add_sname, None, None, None, add_carinfo)
         )
+
+        # Retrieve the new driver's id from the 'driver' table
+        # which exists in the first position of the last tuple in the driver list
+        connection.execute("SELECT * FROM driver")
+        new_drId = connection.fetchall()[-1][0]
+
+        # Create a 'course_ids' list and a 'course_nums' list and add 12 run rows for the new driver
+        # Time and cones set to None, wd to 0, and run_total to None
+        course_ids = ["A", "B", "C", "D", "E", "F"]
+        run_nums = [1, 2]
+        for crs_id in course_ids:
+            for run_num in run_nums:
+                connection.execute(
+                    """INSERT INTO run
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                    (new_drId, crs_id, run_num, None, None, 0, None)
+                )
 
         # Pass a success message to 'admin_home' after admin adds a new driver
         success_add_message = f"Hooray!! The new driver '{add_fname} {add_sname}' has been successfully added!"
@@ -419,7 +432,7 @@ def add_driver():
     return render_template("admin_add_driver.html", cars=cars)
 
 
-@app.route("/admin/is_junior", methods=["GET", "POST"])
+@app.route("/admin/add_junior", methods=["GET", "POST"])
 def add_junior_driver():
     connection = getCursor()
     # Get all cars' data
@@ -435,21 +448,134 @@ def add_junior_driver():
     # Sort caregivers by their surname
     caregivers = sorted(caregivers_unsorted, key=lambda x: (x[2], x[1]))
 
-    # If admin submits the form, get data he has entered.
-    # Lower all the input first and then capitalise the 'first_name' and 'surname'
+    if request.method == "POST":
+        # If admin enters a date of birth on the 'admin_home' page, get 'date_of_birth' data
+        add_dobirth = request.form.get("add_dobirth")
+        print(add_dobirth)
+
+        # Convert the string 'add_dobirth' to a datetime format
+        dobirth = datetime.strptime(add_dobirth, "%Y-%m-%d")
+
+        # Calculate the age
+        today = date.today()
+        age = today.year - dobirth.year - \
+            ((today.month, today.day) < (dobirth.month, dobirth.day))
+        print(age)
+
+        if 12 <= age <= 16:
+            # # If admin submits the form, get data he has entered.
+            # # Lower all the input first and then capitalise the 'first_name' and 'surname'
+            # add_fname = request.form.get("add_fname").lower().capitalize()
+            # add_sname = request.form.get("add_sname").lower().capitalize()
+            # add_carinfo = request.form.get("add_carinfo")
+            # add_caregiver = request.form.get("add_caregiver")
+            # print(add_fname)
+            # print(add_sname)
+            # print(add_carinfo)
+            # print(type(add_dobirth))
+            # print(add_caregiver)
+            return render_template("admin_add_dr_caregiver.html", dobirth=add_dobirth, age=age, cars=cars, caregivers=caregivers)
+        elif 16 < age <= 25:
+            return render_template("admin_add_junior_driver.html", dobirth=add_dobirth, age=age, cars=cars)
+        elif 25 < age:
+            return redirect(url_for("add_driver"))
+        else:
+            error_message = f"Sorry. The driver aged {age} is not eligible to regist. :("
+            return render_template("admin_error_page.html", error_message=error_message)
+
+    # return render_template("admin_add_junior_driver.html", cars=cars, caregivers=caregivers)
+
+
+@app.route("/admin/add_dr_caregiver", methods=["GET", "POST"])
+def add_dr_caregiver():
+    connection = getCursor()
     if request.method == "POST":
         add_fname = request.form.get("add_fname").lower().capitalize()
         add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
         add_dobirth = request.form.get("add_dobirth")
+        add_age = request.form.get("add_age")
         add_caregiver = request.form.get("add_caregiver")
-
         print(add_fname)
         print(add_sname)
         print(add_carinfo)
         print(add_dobirth)
+        print(add_age)
         print(add_caregiver)
+        # There might be possibilities of two drivers having the same first name and surname,
+        # therefore I chose not to check if admin enters a fullname that already exists in the database.
+        # As long as each driver has a unique id number.
+        # Insert the new driver's information into the 'driver' table
+        # Generate a new id for the user using the 'lastrowid' property
+        connection.execute(
+            """INSERT INTO driver
+            VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+            (connection.lastrowid, add_fname,
+             add_sname, add_dobirth, add_age, add_caregiver, add_carinfo)
+        )
 
-        return redirect(url_for("admin_home"))
+        # Retrieve the new driver's id from the 'driver' table
+        # which exists in the first position of the last tuple in the driver list
+        connection.execute("SELECT * FROM driver")
+        new_drId = connection.fetchall()[-1][0]
 
-    return render_template("admin_add_junior_driver.html", cars=cars, caregivers=caregivers)
+        # Create a 'course_ids' list and a 'course_nums' list and add 12 run rows for the new driver
+        # Time and cones set to None, wd to 0, and run_total to None
+        course_ids = ["A", "B", "C", "D", "E", "F"]
+        run_nums = [1, 2]
+        for crs_id in course_ids:
+            for run_num in run_nums:
+                connection.execute(
+                    """INSERT INTO run
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                    (new_drId, crs_id, run_num, None, None, 0, None)
+                )
+
+        # Pass a success message to 'admin_home' after admin adds a new driver
+        success_add_message = f"Hooray!! The new junior driver '{add_fname} {add_sname}' has been successfully added!"
+        return redirect(url_for("admin_home", success_add_message=success_add_message))
+
+
+@app.route("/addin/add_ju_no_cg", methods=["GET", "POST"])
+def add_junior_noCg():
+    if request.method == "POST":
+        add_fname = request.form.get("add_fname").lower().capitalize()
+        add_sname = request.form.get("add_sname").lower().capitalize()
+        add_carinfo = request.form.get("add_carinfo")
+        add_dobirth = request.form.get("add_dobirth")
+        print(add_fname)
+        print(add_sname)
+        print(add_carinfo)
+        print(add_dobirth)
+        # There might be possibilities of two drivers having the same first name and surname,
+        # therefore I chose not to check if admin enters a fullname that already exists in the database.
+        # As long as each driver has a unique id number.
+        # Insert the new driver's information into the 'driver' table
+        # Generate a new id for the user using the 'lastrowid' property
+        connection.execute(
+            """INSERT INTO driver
+            VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+            (connection.lastrowid, add_fname,
+             add_sname, add_dobirth, None, None, add_carinfo)
+        )
+
+        # Retrieve the new driver's id from the 'driver' table
+        # which exists in the first position of the last tuple in the driver list
+        connection.execute("SELECT * FROM driver")
+        new_drId = connection.fetchall()[-1][0]
+
+        # Create a 'course_ids' list and a 'course_nums' list and add 12 run rows for the new driver
+        # Time and cones set to None, wd to 0, and run_total to None
+        course_ids = ["A", "B", "C", "D", "E", "F"]
+        run_nums = [1, 2]
+        for crs_id in course_ids:
+            for run_num in run_nums:
+                connection.execute(
+                    """INSERT INTO run
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                    (new_drId, crs_id, run_num, None, None, 0, None)
+                )
+
+        # Pass a success message to 'admin_home' after admin adds a new driver
+        success_add_message = f"Hooray!! The new junior driver '{add_fname} {add_sname}' has been successfully added!"
+        return redirect(url_for("admin_home", success_add_message=success_add_message))
