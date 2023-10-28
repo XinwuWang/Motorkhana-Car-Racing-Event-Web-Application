@@ -46,8 +46,8 @@
     </table>
 
     <div class="d-grid gap-2 d-md-flex mx-auto">
-        <button type="button" class="btn btn-dark"><a href="{{ url_for('listdrivers') }}" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover"> Driver List</a></button>
-        <button type="button" class="btn btn-dark"><a href="{{ url_for('overall_results')}}" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">Overall Results</a></button>
+        <a href="{{ url_for('listdrivers') }}"><button type="button" class="btn btn-dark">Driver List</button></a>
+        <a href="{{ url_for('overall_results')}}"><button type="button" class="btn btn-dark">Overall Results</button></a>
     </div>
 </div>
 {% endblock %}
