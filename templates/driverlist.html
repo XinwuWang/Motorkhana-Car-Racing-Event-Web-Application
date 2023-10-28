@@ -1,8 +1,10 @@
+<!-- Display the driver list -->
 {% extends "base.html" %}{% block title %}Driver List{% endblock %} {% block content %}
 <!-- driver_list is the variable passed in containing the list of drivers -->
 <!-- Add code to display a list of drivers -->
 
 <div class="container-fluid">
+    <!-- Headinig -->
     <div class="p-2 bg-body-tertiary rounded-3">
         <div class="container-fluid py-5">
             <h2 class="display-5 fw-bold">Driver List</h2>
@@ -10,6 +12,7 @@
     </div>
     <div>
         <table class="table table-striped">
+            <!-- Table headings -->
             <thead>
                 <tr>
                     <th scope="col">Driver ID</th>
@@ -22,10 +25,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for driver in driver_list %}{% if driver[4] and driver[4] in range(12, 26)%}
-                <!-- If it's Junior, display junior drivers in yellow -->
+                <!-- Get data from 'listdrivers()' and insert data into each column-->
+                {% for driver in driver_list %}
+                <!-- Check if the driver is a junior -->
+                {% if driver[4] and driver[4] in range(12, 26)%}
+                <!-- If junior, display junior drivers in yellow -->
                 <tr class="table-warning">
                     <td>{{ driver[0] }}</td>
+                    <!-- Users can click the driver's name to view their run data -->
                     <td>
                         <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }} (J)</a></td>
                     <td>{{ driver[3] }}</td>
@@ -34,9 +41,11 @@
                     <td>{{ driver[6] }}</td>
                     <td>{{ driver[7] }}</td>
                 </tr>
+                <!-- If not junior, display the driver as normal -->
                 {% else %}
                 <tr>
                     <td>{{ driver[0] }}</td>
+                    <!-- Users can click the driver's name to view their run data -->
                     <td>
                         <a class="link-offset-2 link-underline link-underline-opacity-0" href="{{ url_for('driver_run_detail', driver_id=driver[0]) }}">{{ driver[2]}}, {{ driver[1] }}</a></td>
                     <td>{{ driver[3] }}</td>
@@ -49,6 +58,7 @@
             </tbody>
         </table>
     </div>
+    <!-- A note for readablity -->
     <div>
         <p class="fst-italic"> * 'Junior Drivers'(J) in yellow.</p>
     </div>

@@ -1,4 +1,5 @@
-{% extends "base.html "%} {% block title %}Graph{% endblock %} {% block content %}
+<!-- Display top 5 drivers graph -->
+{% extends "base.html "%} {% block title %}Top 5 Graph{% endblock %} {% block content %}
 <!-- access Plotly content delivery network (CDN) charting library -->
 <div class="container-fluid">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -11,13 +12,9 @@
     <div id="myHBarPlot" style="width:100%; max-width:1800px;"></div>
 
     <script>
-        // Note SPACE after each fruit name so gap before horizontal bars
-        // const priceList = [7.25, 8.50, 3.45];
         // Use the 'JSON.parse' function to convert two lists into JavaScript objects
         const resultsList = JSON.parse('{{value_list | tojson | safe}}').reverse();
         const bestDriverList = JSON.parse('{{name_list | tojson | safe}}').reverse();
-        // const fruitList = ['apple ', 'mango ', 'banana '];
-        // REPLACE constants above with passed in variables.
         // Use the '|safe' Jinja filter to mark them as safe (prevents your data being html-escaped). eg,
         // var myList = {{ list_from_py | safe }}
 
@@ -32,7 +29,7 @@
             }
         }];
 
-        // Define graph layout. Excluded a y-axis title as fruit names are self-explanatory.
+        // Define graph layout. Excluded a y-axis title as 'overall time' is self-explanatory.
         const layout = {
             xaxis: {
                 // range: [0, 15],

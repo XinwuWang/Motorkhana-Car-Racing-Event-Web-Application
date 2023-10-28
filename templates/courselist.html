@@ -1,16 +1,15 @@
+<!-- Display list of courses -->
 {% extends "base.html" %}{% block title %}Course List{% endblock %} {% block content %}
 
-
-
-<!-- code to display list of courses-->
-
 <div class="container-fluid">
+    <!-- Heading -->
     <div class="p-2 bg-body-tertiary rounded-3">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">Course List</h1>
             <p class="col-md-8 fs-4">Current competition courses</p>
         </div>
     </div>
+    <!-- Loop through the 'course_list' passed from 'listcourses()' to get course data-->
     <div class="album py-5 bg-body-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">

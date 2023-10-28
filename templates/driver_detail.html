@@ -1,8 +1,10 @@
+<!-- Display the driver's all run data -->
 {% extends "base.html" %} {% block title %}{{ driver[1] }} {{ driver[2] }}'s Details{% endblock %}{% block content %}
 
 <div class="container mt-3 marketing">
 
     <!-- Three columns of text below the carousel -->
+    <!-- Display driver's personal information -->
     <div class="row">
         <div class="col-lg-4">
             <h1 class="fw-normal">{{ driver[1] }} {{ driver[2] }}</h1>
@@ -11,11 +13,10 @@
             <h5 class="fw-normal">Driver Class: {{ driver[4] }}</h5>
         </div>
     </div>
-    <!-- /.row -->
 
 
     <!-- START THE FEATURETTES -->
-
+    <!-- Display the driver's all run data -->
     <hr class="featurette-divider">
     <table class="table">
         <thead>
@@ -28,9 +29,11 @@
                 <th scope="col">Run Total</th>
             </tr>
         </thead>
+        <!-- Get data passed from 'driver_run_detail()' and add data to each column -->
         <tbody>
             {% for run in runsList %} {% if run[0] == driver[0] %}
             <tr>
+                <!-- Display the course name rather than the course id -->
                 {% for course in courses %}{% if run[1] == course[0] %}
                 <td>{{ course[1] }}</td>
                 {% endif %}{% endfor %}
@@ -45,6 +48,7 @@
         </tbody>
     </table>
 
+    <!-- Shortcut to 'driver list' and 'overall results' -->
     <div class="d-grid gap-2 d-md-flex mx-auto">
         <a href="{{ url_for('listdrivers') }}"><button type="button" class="btn btn-dark">Driver List</button></a>
         <a href="{{ url_for('overall_results')}}"><button type="button" class="btn btn-dark">Overall Results</button></a>
