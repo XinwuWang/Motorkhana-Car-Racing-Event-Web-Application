@@ -1,16 +1,24 @@
+<!-- Admin base template for all admin interfaces -->
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8" /> {% if request.path == "/admin" %}
-    <title>Admin Portal</title> {% endif %}
+    <meta charset="utf-8" />
+    <!-- Only displayed on the admin home page(dashboard) -->
+    {% if request.path == "/admin" %}
+    <title>Admin Portal</title>
+    {% endif %}
 
+    <!-- Other admin interfaces display their own title. -->
     <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
+    <!-- Header indicating the current interface only available to admin-->
+    <!-- Click to return to the admin dashboard -->
+    <!-- Admin can also go to the public portal clicking the link from here -->
     <nav class="navbar bg-body-secondary" data-bs-theme="light">
         <div class="container-fluid d-flex justify-content-between">
             <div>
@@ -31,6 +39,7 @@
             </div>
         </div>
     </nav>
+    <!-- Navigation bars directing admin to different pages -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             </button>
@@ -56,6 +65,8 @@
                         </button>
                     </li>
                 </ul>
+                <!-- Use 'form' to realise the search functionality -->
+                <!-- If nothing is entered, admin can view all drivers after clicking the search button -->
                 <form class="d-flex" role="search" method="post" action="{{ url_for('search') }}">
                     <input class="form-control me-2" type="search" placeholder="Enter a name" aria-label="Search" name="search_query">
                     <button class="btn btn-dark btn-outline-light" type="submit">Search</button>
@@ -65,7 +76,10 @@
         </div>
     </nav>
 
-    <!-- Modal asking if adding a new junior driver -->
+    <!-- Toggled modal asking if admin is adding a new junior driver or an adult driver-->
+    <!-- The first modal asking if the new driver is a junior, 'yes' to go to the second modal, and 'no' to go to the 'add_driver' page-->
+    <!-- If 'yes' in the first modal, admin has to enter the date of birth of the new driver. -->
+    <!-- First modal -->
     <div class="modal fade" id="checkjuniorModal" aria-hidden="true" aria-labelledby="checkjuniorModalLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -87,6 +101,7 @@
             </div>
         </div>
     </div>
+    <!-- Second modal -->
     <div class="modal fade" id="ask_dateofbirth" aria-hidden="true" aria-labelledby="ask_dateofbirthLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -108,7 +123,7 @@
                         </div>
                         <div class="d-flex p-3  justify-content-center">
                             <button type="submit" class="btn btn-dark mx-2 mb-3">Submit</button>
-                            <button class="btn btn-secondary mx-2 mb-3" data-bs-target="#checkjuniorModal" data-bs-toggle="modal">Back to first</button>
+                            <button class="btn btn-secondary mx-2 mb-3" data-bs-target="#checkjuniorModal" data-bs-toggle="modal">Go Back</button>
                         </div>
                     </form>
                 </div>
@@ -116,7 +131,7 @@
         </div>
     </div>
 
-    <!-- If the admin successfully adds a new driver, here displays a success message -->
+    <!-- If the admin successfully adds a new driver, display a success message on the admin dashboard page -->
     {% if success_add_message %}
     <div class="alert alert-info alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
         <div class="d-flex justify-content-between align-items-center">
@@ -126,24 +141,26 @@
     </div>
     {% endif %}
 
-    <!-- Home page content -->
+    <!-- Home page content only displayed on the admin dashboard-->
     {% if request.path == '/admin' %}
     <div class="container-fluid py-3">
+        <!-- Header -->
         <header class="pb-3 mb-4 border-bottom text-body-emphasis d-flex align-items-center">
-            <!-- <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none"> -->
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
                     <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
                     <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
                   </svg>
             <span class="fs-4 ms-2">Dashboard</span>
-            </a>
         </header>
 
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <!-- Admin home page background -->
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3 bg-image" style="background-image: url('static/admin_bg.jpg');">
             <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Welcome to the Admin Portal!</h1>
+                <h1 class="display-5 fw-bold text-light">Welcome to the Admin Portal!</h1>
             </div>
         </div>
+        <!-- Shortcut blocks to different pages in the admin interface -->
+        <!-- Shortcut to 'junior list' -->
         <div class="row align-items-md-stretch">
             <div class="col-md-6 py-3">
                 <div class="h-100 p-5 text-bg-dark rounded-3">
@@ -154,6 +171,7 @@
                     </a>
                 </div>
             </div>
+            <!-- Shortcut to 'all drivers' -->
             <div class="col-md-6 py-3">
                 <div class="h-100 p-5 bg-body-tertiary border rounded-3">
                     <h2>All Drivers</h2>
@@ -166,6 +184,7 @@
             </div>
         </div>
         <div class="row align-items-md-stretch">
+            <!-- Shortcut to 'add driver' -->
             <div class="col-md-6 py-3">
                 <div class="h-100 p-5 bg-body-tertiary border rounded-3">
                     <h2>Add Driver</h2>
@@ -173,18 +192,21 @@
                     <button class="btn btn-outline-secondary text-bg-dark" type="submit" data-bs-toggle="modal" data-bs-target="#checkjuniorModal">Add</button>
                 </div>
             </div>
+            <!-- Shortcut to the public interface -->
             <div class="col-md-6 py-3">
                 <div class="h-100 p-5 text-bg-dark rounded-3">
                     <h2>Log out</h2>
                     <p>Leave the Admin Portal and return to the User Portal.</p>
                     <a href="{{ url_for('home') }}">
-                        <button class="btn btn-outline-light" type="button">View</button>
+                        <button class="btn btn-outline-light" type="button">Leave</button>
                     </a>
                 </div>
             </div>
         </div>
     </div>
     {% endif %}
+
+    <!-- Other admin pages will display content here -->
     <section class="content">
         <header>
             {% block header %}{% endblock %}
@@ -194,6 +216,8 @@
         {% endfor %} {% block content %}{% endblock %}
     </section>
 
+    <!-- Footer for all admin pages -->
+    <!-- Shortcut to the admin home page/dashboard by clicking the link on different admin pages -->
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-item"><a href="{{ url_for('admin_home') }}" class="nav-link px-2 text-body-secondary text-decoration-underline">Return to Dashboard</a></li>
