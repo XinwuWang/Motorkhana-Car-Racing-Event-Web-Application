@@ -380,4 +380,9 @@ def update_run():
 
 @app.route("/admin/add_driver", methods=["GET", "POST"])
 def add_driver():
+    connection = getCursor()
+    if request.method == "POST":
+        add_fn = request.form.get("add_fname")
+        print(add_fn)
+        return redirect(url_for("admin_home"))
     return render_template("admin_add_driver.html")

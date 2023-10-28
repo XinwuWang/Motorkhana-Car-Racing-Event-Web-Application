@@ -9,63 +9,101 @@
         <div class="container border p-3">
             <div class="row m-3">
                 <div class="col-md-3">
-                    <label for="dr_idDisplay" class="form-label">First Name</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                    <label for="add_fname" class="form-label">
+                        First Name*
+                    </label>
+                    <input type="text" id="add_fname" class="form-control" placeholder="Enter a first name" name="add_fname" required>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md-3"><label for="dr_idDisplay" class="form-label">Surname</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-3">
+                    <label for="add_sname" class="form-label">
+                        Surname*
+                    </label>
+                    <input type="text" id="add_sname" class="form-control" placeholder="Enter a surname" name="add_sname" required>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md-3"><label for="dr_idDisplay" class="form-label">Car</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-3">
+                    <label for="add_carinfo" class="form-label">
+                        Select a car*
+                    </label>
+                    <select id="add_carinfo" name="add_carinfo" class="form-select" required>
+                        <option value="" disabled selected></option>
+                        <option value="volvo">Volvo</option>
+                        <option value="fiat">Fiat</option>
+                        <option value="audi">Audi</option>
+                    </select>
                 </div>
             </div>
             <div class="row m-3 pt-3">
                 <div class="col-md-3">
-                    <label for="dr_idDisplay" class="form-label">If junior? </label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                    <label for="dr_idDisplay" class="form-label">If the new driver is a junior?* </label>
+                    <div class="form-check">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="if_junior" id="yes_radiobutton" value="yes">
+                            <label class="form-check-label" for="yes_radiobutton">
+                                Yes
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="if_junior" id="no_radiobutton" value="no">
+                            <label class="form-check-label" for="no_radiobutton">
+                                No
+                            </label>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-            </div>
+            <!-- If the new driver is a junior, then fill up the folowing blanks. -->
             <div class="row m-3 pt-3">
                 <div class="col-md-3">
-                    <label for="dr_idDisplay" class="form-label">Date of birth </label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                    <label for="add_dobirth" class="form-label">Date of birth* </label>
+                    <input type="date" id="add_dobirth" class="form-control" name="add_dobirth" max="2012-12-31" required>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md-3"><label for="dr_idDisplay" class="form-label">Age</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-3"><label for="calculate_age" class="form-label">Age</label>
+                    <input type="number" id="calculate_age" class="form-control" value=15 name="calculate_age" readonly>
                 </div>
+                <!-- If age is equal to or less than 16, then admin needs to select a caregiver. -->
                 <div class="col-md-1"></div>
-                <div class="col-md-3"><label for="dr_idDisplay" class="form-label">Select a caregiver</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-3">
+                    <label for="add_caregiver" class="form-label">
+                        Select a caregiver*
+                    </label>
+                    <select id="add_caregiver" name="add_caregiver" class="form-select" required>
+                        <option value="" disabled selected></option>
+                        <option value="adam">Adam</option>
+                        <option value="li">Li</option>
+                        <option value="atwood">Atwood</option>
+                    </select>
+                    <!-- <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required> -->
                 </div>
             </div>
+
+            <!-- If the new driver is not a junior, only fill up run data or leave it empty. -->
             <div class="row m-3 pt-3 pb-3">
                 <div class="col-md-3">
                     <label for="dr_idDisplay" class="form-label">Course </label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" readonly>
                 </div>
-                <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Run Number</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Run number</label>
+                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" readonly>
                 </div>
                 <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Seconds</label>
                     <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
                 </div>
                 <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Cones</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                    <input type="text" id="dr_idDisplay" class="form-control" value=None name="driver_id">
                 </div>
-                <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Wrong Direction</label>
-                    <input type="text" id="dr_idDisplay" class="form-control" value="{{ driver_id }}" name="driver_id" required>
+                <div class="col-md-2"><label for="dr_idDisplay" class="form-label">Wrong direction</label>
+                    <input type="text" id="dr_idDisplay" class="form-control" value=0 name="driver_id">
                 </div>
             </div>
 
             <div class="row m-3 py-3">
                 <div class="col text-center">
                     <button type="submit" class="btn btn-dark">Submit</button>
-
-                    <button type="button" class="btn btn-light ms-3" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-light ms-3" data-bs-dismiss="modal">Reset</button>
                 </div>
             </div>
     </form>
