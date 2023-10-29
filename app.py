@@ -38,6 +38,8 @@ def getCursor():
 @app.route("/")
 def home():
     connection = getCursor()
+
+    # ---If run this web app using the local mysql file, keep and run the code below ---
     # Add the run_total column to the database if the column does not exist
     check_column_exists_query = """SELECT COUNT(*)
     FROM information_schema.columns
@@ -50,23 +52,24 @@ def home():
     if not connection.fetchone()[0] > 0:
         add_column = "ALTER TABLE run ADD run_total FLOAT;"
         connection.execute(add_column)
-    else:
-        # If the run_total column exists, # Execute MySQL query to make sure the run total results of each run up to date
-        connection.execute("SELECT * FROM run")
-        runsList = connection.fetchall()
-        for run in runsList:
-            if run[3] is not None:
-                run_total = run[3] + (run[4] or 0) * 5 + (run[5] or 0) * 10
-                connection.execute(
-                    "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-                    (run_total, run[0], run[1], run[2])
-                )
-            else:
-                run_total = None
-                connection.execute(
-                    "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-                    (run_total, run[0], run[1], run[2])
-                )
+    # ---If run this web app on Pythonanywhere, comment out above code about checking the 'run_total' column, and run the following code. ---
+
+    # If the run_total column exists, execute MySQL query to make sure the run total results of each run up to date
+    connection.execute("SELECT * FROM run")
+    runsList = connection.fetchall()
+    for run in runsList:
+        if run[3] is not None:
+            run_total = run[3] + (run[4] or 0) * 5 + (run[5] or 0) * 10
+            connection.execute(
+                "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
+                (run_total, run[0], run[1], run[2])
+            )
+        else:
+            run_total = None
+            connection.execute(
+                "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
+                (run_total, run[0], run[1], run[2])
+            )
 
     # Get drivers' names and add them to the dropdown box
     connection.execute("SELECT driver_id, first_name, surname FROM driver")
