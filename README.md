@@ -39,6 +39,10 @@ Route '/admin/drivers' takes user input on the 'admin_base.html' page as the val
 
 Route '/admin/drivers/<int:driver_id>' takes driver_id data collected by the 'admin_search_results.html' template to look for details about this driver id using MySQL queries in the database. The database will send data back to '/admin/drivers/<int:driver_id>' which will then pass the data to the 'admin_driver_page.html' to display.
 
+Route '/admin/update_run' retrieves the update data from the form in the 'admin_driver_page.html' template, then using the database queries to pass data to the database. After updating data in the database, '/admin/update_run' sends a success message and redirects to '/admin/drivers/<int:driver_id>'. The latter route will display the success message.
+
+Route '/admin/add_driver' takes the user's choice about adding a non junior driver, directing the user to the 'admin_add_driver.html' template to fill up a form for adding the driver. After the form is submitted,
+
 ## Assumptions and design decisions
 
 ## Database questions
