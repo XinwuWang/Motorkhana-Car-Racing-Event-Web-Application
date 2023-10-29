@@ -13,6 +13,10 @@
 
 ## Web application structure
 
+**Web Application Structure**
+
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/webapp%20srtucture.jpg "webapp structure")
+
 ## Assumptions and design decisions
 
 ## Database questions
