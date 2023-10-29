@@ -82,8 +82,11 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
     ON DELETE CASCADE
     );
 
-- **3 lines of SQL code inserting the Mini and GR Yaris details into the car table**  
-  One
+- **3 lines of SQL code inserting the Mini and GR Yaris details into the car table**
+
+  - INSERT INTO car VALUES
+    (11,'Mini','FWD'),
+    (17,'GR Yaris','4WD');
 
 - **SQL code setting a defaul value of 'RWD' for the driver_class field**  
   One
