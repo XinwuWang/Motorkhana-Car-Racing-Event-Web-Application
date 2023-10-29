@@ -3,13 +3,13 @@
 Name: Xinwu Wang
 Student ID: 1154492
 
-# Web application structure
+## Web application structure
 
-# Assumptions and design decisions
+## Assumptions and design decisions
 
-# Database questions
+## Database questions
 
-# Image sources
+## Image sources
 
 home_bg1.jpg
 https://unsplash.com/photos/racing-black-and-green-sports-car--EXF9shcTO0
