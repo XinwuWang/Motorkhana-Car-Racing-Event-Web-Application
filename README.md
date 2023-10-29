@@ -31,7 +31,13 @@ Route '/overall_results' fetches drivers' run data from the database and calcula
 Route '/graph' gets the 'overall_results' dictionary from '/overall_results' and selects the first five fast drivers, passing together with related drivers' data collected from the database to 'Top5graph.html' to display to users.
 
 **Admin Interface**  
-Route '/admin' is the home page/dashboard for the admin.
+Route '/admin' is the home page/dashboard for the admin. It interacts with the 'admin_base.html' template which displays the home page to the admin. 'admin_base.html' can get user input about adding a new driver, adding a new junior driver, or searching for a driver via forms. Users' responses will be captured as data passed to routes '/admin/drivers', '/admin/add_driver', and '/admin/add_junior'. Route '/admin' also gets messages passed by '/admin/add_driver', '/admin/add_dr_caregiver', and '/admin/add_ju_no_cg', and send them to 'admin_base.html' to display.
+
+Route '/admin/junior_list' fetches junior drivers' information from the database, and passes it to the 'admin_junior_list.html' to display to users.
+
+Route '/admin/drivers' takes user input on the 'admin_base.html' page as the value of the database query and searches for the specific driver's information in the database. The search results will be passed from the database via '/admin/drivers' to the 'admin_search_results.html' template to display.
+
+Route '/admin/drivers/<int:driver_id>' takes driver_id data collected by the 'admin_search_results.html' template to look for details about this driver id using MySQL queries in the database. The database will send data back to '/admin/drivers/<int:driver_id>' which will then pass the data to the 'admin_driver_page.html' to display.
 
 ## Assumptions and design decisions
 
