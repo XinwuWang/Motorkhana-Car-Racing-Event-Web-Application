@@ -64,8 +64,23 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
     drive_class VARCHAR(3) NOT NULL
     );
 
-- **SQL code setting up the relationship between the car and driver tables**  
-  One
+- **SQL code setting up the relationship between the car and driver tables**
+
+  - CREATE TABLE IF NOT EXISTS driver
+    (
+    driver_id INT auto_increment PRIMARY KEY NOT NULL,
+    first_name VARCHAR(25) NOT NULL,
+    surname VARCHAR(25) NOT NULL,
+    date_of_birth DATE,
+    age INT,
+    caregiver INT,
+    car INT NOT NULL,
+    FOREIGN KEY (caregiver) REFERENCES driver(driver_id)
+    ON UPDATE CASCADE,
+    **FOREIGN KEY (car) REFERENCES car(car_num)**
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+    );
 
 - **3 lines of SQL code inserting the Mini and GR Yaris details into the car table**  
   One
