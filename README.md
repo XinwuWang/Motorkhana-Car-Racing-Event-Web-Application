@@ -13,8 +13,6 @@
 
 ## Web application structure
 
-**Web Application Structure**
-
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/webapp%20srtucture.jpg "webapp structure")
 
 My web application has totally 15 routes, 14 templates, 6 provided course images, and 4 background images from other sources. There are 6 routes and 6 templates for the public interface, while 9 routes and 8 templates for the admin interface.
