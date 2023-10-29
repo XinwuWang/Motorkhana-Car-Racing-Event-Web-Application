@@ -50,23 +50,23 @@ def home():
     if not connection.fetchone()[0] > 0:
         add_column = "ALTER TABLE run ADD run_total FLOAT;"
         connection.execute(add_column)
-
-    # If the run_total column exists, execute query to get the run total results of each run
-    connection.execute("SELECT * FROM run")
-    runsList = connection.fetchall()
-    for run in runsList:
-        if run[3] is not None:
-            run_total = run[3] + (run[4] or 0) * 5 + (run[5] or 0) * 10
-            connection.execute(
-                "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-                (run_total, run[0], run[1], run[2])
-            )
-        else:
-            run_total = None
-            connection.execute(
-                "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
-                (run_total, run[0], run[1], run[2])
-            )
+    else:
+        # If the run_total column exists, execute query to get the run total results of each run
+        connection.execute("SELECT * FROM run")
+        runsList = connection.fetchall()
+        for run in runsList:
+            if run[3] is not None:
+                run_total = run[3] + (run[4] or 0) * 5 + (run[5] or 0) * 10
+                connection.execute(
+                    "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
+                    (run_total, run[0], run[1], run[2])
+                )
+            else:
+                run_total = None
+                connection.execute(
+                    "UPDATE run SET run_total = %s WHERE dr_id= %s AND crs_id = %s AND run_num= %s",
+                    (run_total, run[0], run[1], run[2])
+                )
 
     # Get drivers' names and add them to the dropdown box
     connection.execute("SELECT driver_id, first_name, surname FROM driver")
