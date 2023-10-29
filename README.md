@@ -41,7 +41,9 @@ Route '/admin/drivers/<int:driver_id>' takes driver_id data collected by the 'ad
 
 Route '/admin/update_run' retrieves the update data from the form in the 'admin_driver_page.html' template, then using the database queries to pass data to the database. After updating data in the database, '/admin/update_run' sends a success message and redirects to '/admin/drivers/<int:driver_id>'. The latter route will display the success message.
 
-Route '/admin/add_driver' takes the user's choice about adding a non junior driver, directing the user to the 'admin_add_driver.html' template to fill up a form for adding the driver. After the form is submitted,
+Route '/admin/add_driver' fetches car information from the database, and gets the user's choice about adding a non junior driver from the 'admin_base.html' template, directing the user to the 'admin_add_driver.html' page to fill up a form for adding the driver. After the form is submitted, route '/admin/add_driver' captures data passed from 'admin_add_driver.html' and uses database queries to insert it into the database.
+
+Route '/admin/add_junior' gets date of birth data from the modal containing a form that asks the date of birth for adding a new junior driver in the 'admin_base.html' template. Meanwhile, this route fetches data of cars and drivers who are eligible to be a caregiver from the database. Based on the date of birth collected, the 'add_junior_driver()' function under this route uses the 'datetime' module to calculate the age. Depending on different ages, this route passes different data and directs the user to different templates.
 
 ## Assumptions and design decisions
 
