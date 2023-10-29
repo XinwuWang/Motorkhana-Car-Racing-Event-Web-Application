@@ -1,5 +1,8 @@
-{% extends "admin_base.html" %}{% block title %}{{ driver_id }}-{{ driver[1] }} {{ driver[2] }}{% endblock %} {% block content%}
+<!-- Display the driver's all run data -->
+<!-- Admin can edit a driver's run data on this page -->
+{% extends "admin_base.html" %} {% block title %} {{ driver_id }}-{{ driver[1] }} {{ driver[2] }} {% endblock %} {% block content%}
 <!-- Check if data has been updated and message has been sent out from "update_run" to "driver_data" -->
+<!-- Successful update will trigger a success message. -->
 {% if success_message %}
 <div class="alert alert-success alert-dismissible fade show" role="alert" id="liveAlertPlaceholder">
     <div class="d-flex justify-content-between align-items-center">
@@ -8,8 +11,9 @@
     </div>
 </div>
 {% endif %}
-<div class="container mt-3 marketing">
 
+<!-- Driver's details and run data -->
+<div class="container mt-3 marketing">
     <!-- Three columns of text below the carousel -->
     <div class="row">
         <div class="col-lg-4">
@@ -26,11 +30,10 @@
         </div>
     </div>
 
-
-    <!-- START THE FEATURETTES -->
-
+    <!-- Run data table -->
     <hr class="featurette-divider">
     <table class="table">
+        <!-- Headings -->
         <thead>
             <tr>
                 <th scope="col">Course Name</th>
@@ -42,10 +45,19 @@
                 <th scope="col"></th>
             </tr>
         </thead>
+        <!-- Table rows -->
+        <!-- Loop through the 'runList' passed from 'driver_data(driver_id)' and insert data into each column-->
         <tbody>
-            {% for run in runsList %} {% if run[0] == driver[0] %}
+            {% for run in runsList %}
+            <!-- Check if driver id in the run table matches that in the driver table in the database -->
+            {% if run[0] == driver[0] %}
+            <!-- If yes -->
             <tr>
-                {% for course in courses %} {% if run[1] == course[0] %}
+                <!-- Loop through the courses list -->
+                {% for course in courses %}
+                <!-- Check if course id in the run table matches that in the course table -->
+                {% if run[1] == course[0] %}
+                <!-- If yes, get the course name rather than course id -->
                 <td>{{ course[1] }}</td>
                 {% endif %} {% endfor %}
                 <td>{{ run[2] }}</td>
@@ -59,17 +71,21 @@
                     Edit
                   </button>
                 </td>
-                <!-- Modal -->
+
+                <!-- Modal for editing run data -->
                 <div class="modal fade" id="staticBackdrop{{ run[1]}}{{ run[2] }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel{{ run[1]}}{{ run[2] }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
+                                <!-- Header -->
                                 <h1 class="modal-title fs-7" id="staticBackdropLabel">
                                     Edit Run
                                 </h1>
+                                <!-- Close button -->
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                <!-- Use <form> to get user input, and pass data to 'update_run()' -->
                                 <form method="post" action="{{ url_for('update_run') }}">
                                     <!-- Admin can read only driver id, the coure name, and the run number. -->
                                     <div class="mb-3">
@@ -84,7 +100,7 @@
                                         <label for="run_numDisplay" class="form-label">Run Number</label>
                                         <input type="text" id="run_numDisplay" class="form-control" value="{{ run[2] }}" name="run_number" readonly>
                                     </div>
-                                    <!-- ---- -->
+
                                     <!-- Admin can edit time, cones, and wd. -->
                                     <!-- Time is required before submitting the form. -->
                                     <div class="mb-3">
@@ -93,26 +109,25 @@
                                             the 'min' value to limit minimum time to 20 as the fastest time in the database is 22, 
                                             and the 'max' value to limit maximum time to 150 that approximately doubles the existed slowest time in the database.-->
                                         <input type="number" class="form-control" id="InputTime" aria-describedby="timeSeconds" value="{{ run[3] }}" name="time_edit" min=20 step=0.01 max=150 required>
-                                        <div id="timeSeconds" class="form-text">-Enter a number between 20 and 150, e.g. 25, 77.77</div>
+                                        <div id="timeSeconds" class="form-text">•Enter a number between 20 and 150, e.g. 25, 77.77</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="InputCones" class="form-label">Cones</label>
                                         <!-- Limit cones input to minimum 0 or maximum 25 using 'min' and 'max' -->
                                         <input type="number" class="form-control" id="InputCones" aria-describedby="conesNum" value="{{ run[4] }}" name="cones_edit" min=0 max=25>
-                                        <div id="conesNum" class="form-text">-Enter a whole number equal to or less than 20, e.g. 2, 13</div>
+                                        <div id="conesNum" class="form-text">•Enter a whole number equal to or less than 20, e.g. 2, 13</div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="InputWD" class="form-label">Wrong Direction</label>
                                         <!-- Limit WD input to 0 or 1 using 'min' and 'max' -->
                                         <input type="number" class="form-control" id="InputWD" aria-describedby="wdNum" value="{{ run[5] }}" name="wd_edit" min=0 max=1>
-                                        <div id="wdNum" class="form-text">-Enter 0 or 1</div>
+                                        <div id="wdNum" class="form-text">•Enter 0 or 1</div>
                                     </div>
-
                                     <br>
-                                    <div>
-                                        <button type="submit" class="btn btn-dark">Submit</button>
+                                    <!-- 'Submit' and 'Close' buttons -->
+                                    <div class="d-flex p-3 justify-content-center">
+                                        <button type="submit" class="btn btn-dark me-2">Submit</button>
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-
                                     </div>
                                 </form>
                             </div>
@@ -121,16 +136,14 @@
                 </div>
             </tr>
             {% endif %} {% endfor %}
-
         </tbody>
     </table>
 
-
+    <!-- Shortcut to view all drivers -->
     <div class="d-grid gap-2 d-md-flex mx-auto">
         <form class="d-flex" role="search" method="post" action="{{ url_for('search') }}">
             <input class="form-control me-2" type="hidden" placeholder=" " aria-label="Search" name="search_query">
             <button class="btn btn-dark text-decoration-none" type="submit">All drivers</button>
         </form>
-        <!-- <button type="button" class="btn btn-dark"><a href="#" class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">Overall Results</a></button> -->
     </div>
 </div>{% endblock %}

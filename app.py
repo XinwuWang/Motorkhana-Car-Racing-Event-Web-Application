@@ -467,24 +467,13 @@ def add_junior_driver():
         print(age)
 
         if 12 <= age <= 16:
-            # # If admin submits the form, get data he has entered.
-            # # Lower all the input first and then capitalise the 'first_name' and 'surname'
-            # add_fname = request.form.get("add_fname").lower().capitalize()
-            # add_sname = request.form.get("add_sname").lower().capitalize()
-            # add_carinfo = request.form.get("add_carinfo")
-            # add_caregiver = request.form.get("add_caregiver")
-            # print(add_fname)
-            # print(add_sname)
-            # print(add_carinfo)
-            # print(type(add_dobirth))
-            # print(add_caregiver)
             return render_template("admin_add_dr_caregiver.html", dobirth=add_dobirth, age=age, cars=cars, caregivers=caregivers)
         elif 16 < age <= 25:
             return render_template("admin_add_junior_driver.html", dobirth=add_dobirth, age=age, cars=cars)
         elif 25 < age:
             return redirect(url_for("add_driver"))
         else:
-            error_message = f"Sorry. The driver aged {age} is not eligible to regist. :("
+            error_message = f"Sorry. The driver aged {age} is not eligible to register. :("
             return render_template("admin_error_page.html", error_message=error_message)
 
     # return render_template("admin_add_junior_driver.html", cars=cars, caregivers=caregivers)

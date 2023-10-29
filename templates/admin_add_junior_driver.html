@@ -1,18 +1,24 @@
+<!-- Admin can add a new junior driver who doesn't need a caregiver on this page -->
+
 {% extends "admin_base.html" %}{% block title %}Add a Junior Driver{% endblock %} {% block content%}
 <div class="container">
+    <!-- Header -->
     <div class="bg-body-tertiary">
-        <div class="container-fluid py-5">
+        <div class="container-fluid py-5 text-center">
             <h1 class="text-body-emphasis">Add a New Junior Driver</h1>
         </div>
     </div>
 
     <div class="container border p-3">
+        <!-- Use a form to get user input and pass data to 'add_junior_noCg()' (for juniors without a caregiver) -->
         <form method="post" action="{{ url_for('add_junior_noCg') }}">
             <div class="row m-3">
                 <div class="col-md-3">
                     <label for="add_fname" class="form-label">
                         First Name*
                     </label>
+                    <!-- Name input validation added. Only letters A-Z/a-z allowed and maxlength 20 -->
+                    <!-- Can not be empty for submission -->
                     <input type="text" id="add_fname" class="form-control" placeholder="Letter A-Z/a-z" name="add_fname" maxlength="20" pattern="[a-zA-Z]*" required>
                 </div>
                 <div class="col-md-1"></div>
@@ -20,15 +26,20 @@
                     <label for="add_sname" class="form-label">
                         Surname*
                     </label>
+                    <!-- Name input validation added. Only letters A-Z/a-z allowed and maxlength 20 -->
+                    <!-- Can not be empty for submission -->
                     <input type="text" id="add_sname" class="form-control" placeholder="Letter A-Z/a-z" name="add_sname" maxlength="20" pattern="[a-zA-Z]*" required>
                 </div>
-            </div>
-
-            <div class="row m-3 pt-3">
+                <!-- Add some space between each column -->
+                <div class="col-md-1"></div>
+                <!-- Dropdown box for selecting a car -->
                 <div class="col-md-3">
                     <label for="add_carinfo" class="form-label">
                         Select a car*
                     </label>
+                    <!-- Loop through the cars list passed from 'add_junior_driver()' and display them as options for admin to choose -->
+                    <!-- Display 'car model' and 'drive class', and pass 'car number' to 'add_driver()' -->
+                    <!-- This column cannot be empty for submitting the form. -->
                     <select id="add_carinfo" name="add_carinfo" class="form-select" required>
                         <option value="" disabled selected></option>
                         {% for car in cars %}
@@ -37,6 +48,7 @@
                     </select>
                 </div>
             </div>
+            <!-- Date of birth and age displayed only -->
             <div class="row m-3 pt-3">
                 <div class="col-md-3">
                     <label for="add_dobirth" class="form-label">

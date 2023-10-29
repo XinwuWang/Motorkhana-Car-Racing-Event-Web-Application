@@ -1,36 +1,43 @@
+<!-- Display all drivers and search results -->
 {% extends "admin_base.html" %} {% block title %}Driver{% endblock %} {% block content%}
 <div class="container-fluid">
+    <!-- Header -->
+    <!-- As more than one drivers will be displayed here if admin searches by partial texts, the header looks like 'Driver(s)' -->
     <header class="pb-2 pt-3 mb-4 border-bottom text-body-emphasis">
         <span class="fs-2">
         <p class="fst-italic fw-light">Driver(s)...</p>
         </span>
         </a>
     </header>
+    <!-- If there is at least one driver found after searching, display a card showing name, driver_id, car, and class -->
     {% if drivers %}
     <div class="row row-cols-1 row-cols-md-3 mb-5 text-center">
         {% for driver in drivers %}
         <div class="col">
             <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
+                    <!-- Check if the driver is a junior. If yes, display '(J)' next to their name. -->
                     {% if driver[3] and driver[3] in range(12, 26) %}
-                    <h2 class="my-0 fw-normal">{{ driver[1] }} {{ driver[2] }} (J)</h4>
-                        {% else %}
-                        <h2 class="my-0 fw-normal">{{ driver[1] }} {{ driver[2] }}</h4>
-                            {% endif %}
+                    <h2 class="my-0 fw-normal">{{ driver[1] }} {{ driver[2] }} (J)</h2>
+                    {% else %}
+                    <h2 class="my-0 fw-normal">{{ driver[1] }} {{ driver[2] }}</h2>
+                    {% endif %}
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title pricing-card-title">Driver ID: {{ driver[0] }}</small>
-                        </h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Model: {{ driver[4] }}</li>
-                            <li>Class: {{ driver[5] }}</li>
-                        </ul>
-                        <button type="button" class="w-40 btn btn-lg btn-dark"><a href="{{ url_for('driver_data', driver_id=driver[0]) }}" class="text-white text-decoration-none">Enter</a></button>
+                    <h3 class="card-title pricing-card-title">Driver ID: {{ driver[0] }}
+                    </h3>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Model: {{ driver[4] }}</li>
+                        <li>Class: {{ driver[5] }}</li>
+                    </ul>
+                    <!-- Button to enter the driver's detailed page -->
+                    <a href="{{ url_for('driver_data', driver_id=driver[0]) }}"><button type="button" class="w-40 btn btn-lg btn-dark">Enter</button></a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    <!-- If no matched results, display the error message passed from 'search()' -->
     {% else %}
     <div class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid py-5">
