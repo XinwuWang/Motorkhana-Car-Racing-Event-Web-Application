@@ -1,7 +1,7 @@
 # 2023S2-BRMM-webapp
 
-** Name: Xinwu Wang  
-Student ID: 1154492 **
+**Name: Xinwu Wang**  
+**Student ID: 1154492**
 
 ## Web application structure
 
