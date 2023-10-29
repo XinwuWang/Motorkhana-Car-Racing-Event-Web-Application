@@ -58,6 +58,18 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 - **SQL statement creating the car table and defining its three fields**  
   One
 
+- **SQL code setting up the relationship between the car and driver tables**  
+  One
+
+- **3 lines of SQL code inserting the Mini and GR Yaris details into the car table**  
+  One
+
+- **SQL code setting a defaul value of 'RWD' for the driver_class field**  
+  One
+
+- **Reasons why drivers and the admin access different routes, and examples of problems of everyone using the same routes**  
+  One
+
 ## Image sources
 
 - [home_bg1.jpg](https://unsplash.com/photos/racing-black-and-green-sports-car--EXF9shcTO0)  
