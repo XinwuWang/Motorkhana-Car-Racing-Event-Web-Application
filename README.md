@@ -25,7 +25,7 @@ Route '/listcourses' fetches course data from the database and passes it to the 
 
 Route '/driver/<int:driver_id>' gets driver id collected from users' choices by 'base.html', 'driverlist.html', and 'overall_results.html' templates, uses this id in the database query to fetch a specific driver's details, and passes data to 'driver_detail.html' to display.
 
-Route '/overall_results' fetches drivers' run data from the database and calculates the overall results that will be passed to 'overall_results.html' to display to users. The Flask_Session extension is used here to store and pass the 'overall_results' list to route 'graph' for ranking the drivers.
+Route '/overall_results' fetches drivers' run data from the database and calculates the overall results that will be passed to 'overall_results.html' to display to users. The Flask_Session extension is used here to store and pass the 'overall_results' list to route '/graph' for ranking the drivers.
 
 ## Assumptions and design decisions
 
