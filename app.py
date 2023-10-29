@@ -39,11 +39,13 @@ def getCursor():
 def home():
     connection = getCursor()
     # Add the run_total column to the database if the column does not exist
-    check_column_exists = """SELECT COUNT(*)
+    check_column_exists_query = """SELECT COUNT(*)
     FROM information_schema.columns
     WHERE table_schema='motorkhana'
     AND table_name='run'
-    AND column_name='run_total'""".format("motorkhana", "run", "run_total")
+    AND column_name='run_total'"""
+    check_column_exists = check_column_exists_query.format(
+        "motorkhana", "run", "run_total")
     connection.execute(check_column_exists)
     if not connection.fetchone()[0] > 0:
         add_column = "ALTER TABLE run ADD run_total FLOAT;"
