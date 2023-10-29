@@ -33,6 +33,8 @@ def getCursor():
     return dbconn
 
 
+### Routes for public interfaces start here ###
+# Public: homepage
 @app.route("/")
 def home():
     connection = getCursor()
@@ -68,10 +70,10 @@ def home():
     connection.execute("SELECT driver_id, first_name, surname FROM driver")
     drivers_info_unsorted = connection.fetchall()
     drivers_info = sorted(drivers_info_unsorted, key=lambda x: (x[1], x[2]))
-    print(drivers_info)
     return render_template("base.html", drivers_info=drivers_info)
 
 
+# Public: driver list
 @app.route("/listdrivers")
 def listdrivers():
     connection = getCursor()
@@ -90,6 +92,7 @@ def listdrivers():
     return render_template("driverlist.html", driver_list=driverList, drivers_info=drivers_info)
 
 
+# Public: course list
 @app.route("/listcourses")
 def listcourses():
     connection = getCursor()
@@ -106,6 +109,7 @@ def listcourses():
     return render_template("courselist.html", course_list=courseList, drivers_info=drivers_info)
 
 
+# Public: a driver's details and all run data
 @app.route("/driver/<int:driver_id>")
 def driver_run_detail(driver_id):
     connection = getCursor()
@@ -140,6 +144,7 @@ def driver_run_detail(driver_id):
                            )
 
 
+# Public: display overall results
 @app.route("/overallresults")
 def overall_results():
     connection = getCursor()
@@ -210,7 +215,7 @@ def overall_results():
     # Use the lambda function here to sort the overall results from best to worst, and put NQ at the bottom
     sorted_overall = dict(sorted(driver_info_dic.items(),
                                  key=lambda item: (float(item[1]["overall"]) if item[1]["overall"] != "NQ" else float("inf"))))
-    print(sorted_overall)
+
     # Store the overall resutls dictionary in the Flask session object that can be retrieved in the "graph" route later.
     session["sorted_overall"] = sorted_overall
 
@@ -225,6 +230,7 @@ def overall_results():
                            )
 
 
+# Public: display the top 5 drivers graph
 @app.route("/graph")
 def showgraph():
     connection = getCursor()
@@ -255,18 +261,18 @@ def showgraph():
                            )
 
 
-# Admin routes start from here
-# Admin homepage
+### Admin routes start from here ###
+# Admin: dashboard/homepage
 @app.route("/admin")
 def admin_home():
-
-    # After admin adds a new user, the admin dashboard will display a success message.
-    # Here get the messaged passed from 'add_driver'
+    # After admin adds a new driver/new junior driver with a caregiver/new junior driver without a caregiver,
+    # the admin dashboard will display a success message.
+    # Here get the message passed from 'add_driver()', 'add_dr_caregiver()', and 'add_junior_noCg()'
     success_add_message = request.args.get("success_add_message")
-
     return render_template("admin_base.html", success_add_message=success_add_message)
 
 
+# Admin: view the junior driver list
 @app.route("/admin/junior_list")
 def junior_list():
     connection = getCursor()
@@ -287,14 +293,13 @@ def junior_list():
             else:
                 junior_drivers_unsorted.append(
                     (driver[0], driver[1], driver[2], driver[3], driver[4], None, None))
-    print(junior_drivers_unsorted)
     junior_drivers = sorted(junior_drivers_unsorted,
                             key=lambda x: (x[4], x[2]), reverse=True)
-    print(junior_drivers)
 
     return render_template("admin_junior_list.html", junior_drivers=junior_drivers)
 
 
+# Admin: search for a driver
 @app.route("/admin/drivers", methods=["GET", "POST"])
 def search():
     connection = getCursor()
@@ -308,15 +313,6 @@ def search():
         drivers_unsorted = connection.fetchall()
         drivers = sorted(drivers_unsorted, key=lambda x: (x[2], x[1]))
         if drivers:
-            # # Get runs data
-            # connection.execute(
-            #     "SELECT * FROM run WHERE dr_id = %s;", (driver[0],))
-            # run_data = connection.fetchall()
-            # print(run_data)
-
-            # # Get a list of all the courses' information
-            # connection.execute("SELECT * FROM course;")
-            # courses = connection.fetchall()
             return render_template("admin_search_results.html", drivers=drivers)
         else:
             message = f"Sorry...could't find '{input}'. Please check your input. :("
@@ -324,6 +320,7 @@ def search():
     return render_template("admin_base.html")
 
 
+# Admin: access a driver's details and all run data
 @app.route("/admin/drivers/<int:driver_id>")
 def driver_data(driver_id):
     connection = getCursor()
@@ -356,6 +353,7 @@ def driver_data(driver_id):
                            )
 
 
+# Admin: update a driver's run data
 @app.route("/admin/update_run", methods=["GET", "POST"])
 def update_run():
     connection = getCursor()
@@ -387,6 +385,7 @@ def update_run():
         return redirect(url_for("driver_data", driver_id=driver_id, success_message=success_message))
 
 
+# Admin: add a driver aged over 25 to the database
 @app.route("/admin/add_driver", methods=["GET", "POST"])
 def add_driver():
     connection = getCursor()
@@ -436,6 +435,7 @@ def add_driver():
     return render_template("admin_add_driver.html", cars=cars)
 
 
+# Admin: check a new junior driver's age befor adding to the database
 @app.route("/admin/add_junior", methods=["GET", "POST"])
 def add_junior_driver():
     connection = getCursor()
@@ -455,7 +455,6 @@ def add_junior_driver():
     if request.method == "POST":
         # If admin enters a date of birth on the 'admin_home' page, get 'date_of_birth' data
         add_dobirth = request.form.get("add_dobirth")
-        print(add_dobirth)
 
         # Convert the string 'add_dobirth' to a datetime format
         dobirth = datetime.strptime(add_dobirth, "%Y-%m-%d")
@@ -464,7 +463,6 @@ def add_junior_driver():
         today = date.today()
         age = today.year - dobirth.year - \
             ((today.month, today.day) < (dobirth.month, dobirth.day))
-        print(age)
 
         if 12 <= age <= 16:
             return render_template("admin_add_dr_caregiver.html", dobirth=add_dobirth, age=age, cars=cars, caregivers=caregivers)
@@ -476,9 +474,8 @@ def add_junior_driver():
             error_message = f"Sorry. The driver aged {age} is not eligible to register. :("
             return render_template("admin_error_page.html", error_message=error_message)
 
-    # return render_template("admin_add_junior_driver.html", cars=cars, caregivers=caregivers)
 
-
+# Admin: add a new junior driver aged 12-16
 @app.route("/admin/add_dr_caregiver", methods=["GET", "POST"])
 def add_dr_caregiver():
     connection = getCursor()
@@ -489,12 +486,7 @@ def add_dr_caregiver():
         add_dobirth = request.form.get("add_dobirth")
         add_age = request.form.get("add_age")
         add_caregiver = request.form.get("add_caregiver")
-        print(add_fname)
-        print(add_sname)
-        print(add_carinfo)
-        print(add_dobirth)
-        print(add_age)
-        print(add_caregiver)
+
         # There might be possibilities of two drivers having the same first name and surname,
         # therefore I chose not to check if admin enters a fullname that already exists in the database.
         # As long as each driver has a unique id number.
@@ -529,6 +521,7 @@ def add_dr_caregiver():
         return redirect(url_for("admin_home", success_add_message=success_add_message))
 
 
+# Admin: add a new junior driver aged older than 16 and younger than 25
 @app.route("/addin/add_ju_no_cg", methods=["GET", "POST"])
 def add_junior_noCg():
     if request.method == "POST":
@@ -536,10 +529,7 @@ def add_junior_noCg():
         add_sname = request.form.get("add_sname").lower().capitalize()
         add_carinfo = request.form.get("add_carinfo")
         add_dobirth = request.form.get("add_dobirth")
-        print(add_fname)
-        print(add_sname)
-        print(add_carinfo)
-        print(add_dobirth)
+
         # There might be possibilities of two drivers having the same first name and surname,
         # therefore I chose not to check if admin enters a fullname that already exists in the database.
         # As long as each driver has a unique id number.
