@@ -55,13 +55,14 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 ## Database questions
 
-- **SQL statement creating the car table and defining its three fields**  
-   CREATE TABLE IF NOT EXISTS car
-  (
-  car_num INT PRIMARY KEY NOT NULL,
-  model VARCHAR(20) NOT NULL,
-  drive_class VARCHAR(3) NOT NULL
-  );
+- **SQL statement creating the car table and defining its three fields**
+
+  - CREATE TABLE IF NOT EXISTS car
+    (
+    car_num INT PRIMARY KEY NOT NULL,
+    model VARCHAR(20) NOT NULL,
+    drive_class VARCHAR(3) NOT NULL
+    );
 
 - **SQL code setting up the relationship between the car and driver tables**  
   One
