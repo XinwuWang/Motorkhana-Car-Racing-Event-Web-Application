@@ -55,6 +55,9 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 ## Database questions
 
+- **SQL statement creating the car table and defining its three fields**  
+  One
+
 ## Image sources
 
 - [home_bg1.jpg](https://unsplash.com/photos/racing-black-and-green-sports-car--EXF9shcTO0)  
