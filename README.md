@@ -95,8 +95,18 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
     (44,'BRZ','RWD')  
     ;
 
-- **SQL code setting a defaul value of 'RWD' for the driver_class field**  
-  One
+- **SQL code setting a defaul value of 'RWD' for the driver_class field**
+
+  - INSERT INTO car (car_num, model, drive_class) VALUES  
+    (11,'Mini','RWD'),  
+    (17,'GR Yaris','RWD'),  
+    (18,'MX-5','RWD'),  
+    (20,'Camaro','RWD'),  
+    (22,'MX-5','RWD'),  
+    (31,'Charade','RWD'),  
+    (36,'Swift','RWD'),  
+    (44,'BRZ','RWD')  
+    ;
 
 - **Reasons why drivers and the admin access different routes, and examples of problems of everyone using the same routes**  
   One
