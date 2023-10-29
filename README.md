@@ -17,7 +17,8 @@ My web application has totally 15 routes, 14 templates, 6 provided course images
 
 The routes, templates, database, and static files interact with each other to realise all the functionalities required by COMP636 Motorkhana final assignment. Functions under different routes in the 'app.py' file use MySQL queries to fetch data from the database. Jinja templates are widely used to pass data between HTML templates and routes in the 'app.py' file. HTML templates use [BootStrap](https://getbootstrap.com/) to display user friendly frontend interfaces. Course images and background images for the public interface and the admin interface in the 'static' folder are retrieved and displayed by related templates.
 
-**Public Interface**  
+### Public Interface
+
 Route '/' is the home page of the public interface, fetching 'driver_id', 'first_name', and 'surname' to insert into the dropdown box in navigation bar in the 'base.html'. 'base.html' uses Jinja templates to get data passed from the 'home()' function under this route and display data to users. When users select a driver from the dropdown box, Jinja templates will pass 'driver_id' to the 'driver_run_detail(driver_id)' function under route '/driver/<driver_id>'. The '/driver/<driver_id>' route will then use this driver_id to retrieve this id's details and run data. After fetching related data from MySQL database, route '/driver/<driver_id>' will pass it to 'driver_detail.html' using Jinja templates. 'driver_detail.html' will then display received data to the public. Besides, the 'home()'function under route '/' also calculates 'run_total' as long as users arrive at this page. Thus, users can view latest data when heading over to other routes. The 'base.html' template allows users to head to different routes by clicking buttons in the navigation bar. The routes include '/listdrivers', '/listcourse', '/driver/<int:driver_id>', '/overallresults', and '/admin'.
 
 Route '/listdrivers' retrieves data from MySQL database and passes it to the 'driverlist.html' template which displays the received data to users. If users click a driver's name on the 'driverlist.html' template, Jinja templates will pass this driver's ID to route '/driver/<driver_id>' which will trigger the 'driver_run_detail(driver_id)' function.
@@ -30,7 +31,8 @@ Route '/overall_results' fetches drivers' run data from the database and calcula
 
 Route '/graph' gets the 'overall_results' dictionary from '/overall_results' and selects the first five fast drivers, passing together with related drivers' data collected from the database to 'Top5graph.html' to display to users.
 
-**Admin Interface**  
+### Admin Interface
+
 Route '/admin' is the home page/dashboard for the admin only. The admin can access this route by clicking a link on the public home page of route '/'. Route '/admin' interacts with the 'admin_base.html' template which displays the admin home page to the admin. 'admin_base.html' can get the admin's input about adding a new driver, adding a new junior driver, or searching for a driver via forms. The admin's responses will be captured as data passed to routes '/admin/drivers', '/admin/add_driver', and '/admin/add_junior'. Route '/admin' also gets messages passed from '/admin/add_driver', '/admin/add_dr_caregiver', and '/admin/add_ju_no_cg', and sends them back to 'admin_base.html' to display. Besides, the 'admin_base.html' template allows the admin to go to route '/admin/junior_list', and route '/' for the public home interface.
 
 Route '/admin/junior_list' fetches junior drivers' information from the database, and passes it to the 'admin_junior_list.html' to display to the admin.
