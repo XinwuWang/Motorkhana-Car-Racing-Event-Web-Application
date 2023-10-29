@@ -51,7 +51,7 @@ def home():
         add_column = "ALTER TABLE run ADD run_total FLOAT;"
         connection.execute(add_column)
     else:
-        # If the run_total column exists, execute query to get the run total results of each run
+        # If the run_total column exists, # Execute MySQL query to make sure the run total results of each run up to date
         connection.execute("SELECT * FROM run")
         runsList = connection.fetchall()
         for run in runsList:
