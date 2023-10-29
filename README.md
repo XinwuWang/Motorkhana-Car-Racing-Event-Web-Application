@@ -43,7 +43,13 @@ Route '/admin/update_run' retrieves the update data from the form in the 'admin_
 
 Route '/admin/add_driver' fetches car information from the database, and gets the user's choice about adding a non junior driver from the 'admin_base.html' template, directing the user to the 'admin_add_driver.html' page to fill up a form for adding the driver. After the form is submitted, route '/admin/add_driver' captures data passed from 'admin_add_driver.html' and uses database queries to insert it into the database.
 
-Route '/admin/add_junior' gets date of birth data from the modal containing a form that asks the date of birth for adding a new junior driver in the 'admin_base.html' template. Meanwhile, this route fetches data of cars and drivers who are eligible to be a caregiver from the database. Based on the date of birth collected, the 'add_junior_driver()' function under this route uses the 'datetime' module to calculate the age. Depending on different ages, this route passes different data and directs the user to different templates.
+Route '/admin/add_junior' gets date of birth data from the modal containing a form that asks the date of birth for adding a new junior driver in the 'admin_base.html' template. Meanwhile, this route fetches data of cars and drivers who are eligible to be a caregiver from the database. Based on the date of birth collected, the 'add_junior_driver()' function under this route uses the 'datetime' module to calculate the age. Depending on different ages, this route passes different data and directs the user to different templates. If the age is over 25, this route directs the user to 'admin_add_driver.html' with invisibility of the date of birth, the age, and the 'select a caregiver' functionality. If between 16 and 25, the user will go to 'admin_add_junior_driver.html' with no need to select a caregiver. If between 12 and 16, the user is required to select a caregiver. If under 12, the user goes to 'admin_error_page.html' and sees an error message.
+
+Route '/admin/add_dr_caregiver' gets data passed by the form from the 'admin_add_dr_caregiver.html'. The new junior driver aged 12-16 will be able to access this form and be required to select a caregiver. After the form is submitted, the data will be passed to this route which will save it to the database.
+
+Route '/admin/add_ju_no_cg' retrieves data passed by the form in the 'admin_add_junior_driver.html' template. New junior drivers aged 16-25 can access this form. No caregiver needs to be selected for submitting the form. After getting the data from user input, this route uses the MySQL queries to save data to the database.
+
+Successfully adding new drivers' details to the database under routes '/admin/add_driver', '/admin/add_dr_caregiver', and '/admin/add_ju_no_cg' will pass a success message to route '/admin' and display it in the 'admin_base.html' page.
 
 ## Assumptions and design decisions
 
