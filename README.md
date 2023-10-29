@@ -17,6 +17,7 @@ My web application has totally 15 routes, 14 templates, 6 provided course images
 
 The routes, templates, database, and static files interact with each other to realise all the functionalities required by COMP636 Motorkhana final assignment. Functions under different routes in the 'app.py' file use MySQL queries to fetch data from the database. Jinja templates are widely used to pass data between HTML templates and routes in the 'app.py' file.
 
+**Public Interface**
 Route '/' is the home page of the public interface, fetching 'driver_id', 'first_name', and 'surname' to insert into the dropdown box in navigation bar in the 'base.html'. 'base.html' uses the Jinja template to get data passed from the 'home' function under this route and display data to users. When users select a driver from the dropdown box, Jinja templates will pass 'driver_id' to the 'driver_run_detail(driver_id)' function under route '/driver/<driver_id>'. The '/driver/<driver_id>' route will then use this driver_id to retrieve this id's details and run data. After fetching related data from MySQL database, route '/driver/<driver_id>' will pass it to 'driver_detail.html' using Jinja template. 'driver_detail.html' will then display received data to the public. Besides, the 'home()'function under route '/' also calculates 'run_total' as long as users arrive at this page. Thus, users can view latest data when heading over to other routes.
 
 Route '/listdrivers' retrieves data from MySQL database and passes it to the 'driverlist.html' template which displays the received data to users. If users click a driver's name on the 'driverlist.html' template, Jinja templates will pass this driver's ID to route '/driver/<driver_id>' which will trigger the 'driver_run_detail(driver_id)' function.
@@ -25,7 +26,12 @@ Route '/listcourses' fetches course data from the database and passes it to the 
 
 Route '/driver/<int:driver_id>' gets driver id collected from users' choices by 'base.html', 'driverlist.html', and 'overall_results.html' templates, uses this id in the database query to fetch a specific driver's details, and passes data to 'driver_detail.html' to display.
 
-Route '/overall_results' fetches drivers' run data from the database and calculates the overall results that will be passed to 'overall_results.html' to display to users. The Flask_Session extension is used here to store and pass the 'overall_results' list to route '/graph' for ranking the drivers.
+Route '/overall_results' fetches drivers' run data from the database and calculates the overall results that will be passed to 'overall_results.html' to display to users. The Flask_Session extension is used here to store and pass the 'overall_results' dictionary to route '/graph' for ranking the drivers.
+
+Route '/graph' gets the 'overall_results' dictionary from '/overall_results' and selects the first five fast drivers, passing together with related drivers' data collected from the database to 'Top5graph.html' to display to users.
+
+**Admin Interface**  
+Route '/admin' is the home page/dashboard for the admin.
 
 ## Assumptions and design decisions
 
