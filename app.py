@@ -473,7 +473,7 @@ def add_junior_driver():
         elif 25 < age:
             return redirect(url_for("add_driver"))
         else:
-            error_message = f"Sorry. The driver aged {age} is not eligible to register. :("
+            error_message = f"Sorry. The driver aged {age} is too young and not eligible to register. :("
             return render_template("admin_error_page.html", error_message=error_message)
 
 
