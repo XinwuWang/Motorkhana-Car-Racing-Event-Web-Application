@@ -57,42 +57,42 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 - **SQL statement creating the car table and defining its three fields**
 
-  - CREATE TABLE IF NOT EXISTS car
-    (
-    car_num INT PRIMARY KEY NOT NULL,
-    model VARCHAR(20) NOT NULL,
-    drive_class VARCHAR(3) NOT NULL
-    );
+  - CREATE TABLE IF NOT EXISTS car  
+    (  
+     car_num INT PRIMARY KEY NOT NULL,  
+     model VARCHAR(20) NOT NULL,  
+     drive_class VARCHAR(3) NOT NULL  
+     );
 
 - **SQL code setting up the relationship between the car and driver tables**
 
-  - CREATE TABLE IF NOT EXISTS driver
-    (
-    driver_id INT auto_increment PRIMARY KEY NOT NULL,
-    first_name VARCHAR(25) NOT NULL,
-    surname VARCHAR(25) NOT NULL,
-    date_of_birth DATE,
-    age INT,
-    caregiver INT,
-    car INT NOT NULL,
-    FOREIGN KEY (caregiver) REFERENCES driver(driver_id)
-    ON UPDATE CASCADE,
-    **FOREIGN KEY (car) REFERENCES car(car_num)**
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-    );
+  - CREATE TABLE IF NOT EXISTS driver  
+    (  
+     driver_id INT auto_increment PRIMARY KEY NOT NULL,  
+     first_name VARCHAR(25) NOT NULL,  
+     surname VARCHAR(25) NOT NULL,  
+     date_of_birth DATE,  
+     age INT,  
+     caregiver INT,  
+     car INT NOT NULL,  
+     FOREIGN KEY (caregiver) REFERENCES driver(driver_id)  
+     ON UPDATE CASCADE,  
+     **FOREIGN KEY (car) REFERENCES car(car_num)**  
+     ON UPDATE CASCADE  
+     ON DELETE CASCADE  
+     );
 
 - **3 lines of SQL code inserting the Mini and GR Yaris details into the car table**
 
-  - **INSERT INTO car VALUES**
-    **(11,'Mini','FWD'),**
-    **(17,'GR Yaris','4WD'),**
-    (18,'MX-5','RWD'),
-    (20,'Camaro','RWD'),
-    (22,'MX-5','RWD'),
-    (31,'Charade','FWD'),
-    (36,'Swift','FWD'),
-    (44,'BRZ','RWD')
+  - **INSERT INTO car VALUES**  
+    **(11,'Mini','FWD'),**  
+    **(17,'GR Yaris','4WD'),**  
+    (18,'MX-5','RWD'),  
+    (20,'Camaro','RWD'),  
+    (22,'MX-5','RWD'),  
+    (31,'Charade','FWD'),  
+    (36,'Swift','FWD'),  
+    (44,'BRZ','RWD')  
     ;
 
 - **SQL code setting a defaul value of 'RWD' for the driver_class field**  
