@@ -3,11 +3,11 @@
 **Name: Xinwu Wang**  
 **Student ID: 1154492**
 
-**[GitHub](https://github.com/XinwuWang/2023S2-BRMM-webapp)**
+[GitHub](https://github.com/XinwuWang/2023S2-BRMM-webapp)
 
 - URL: https://github.com/XinwuWang/2023S2-BRMM-webapp
 
-**[Pythonanywhere](https://xinwuwang.pythonanywhere.com/)**
+[Pythonanywhere](https://xinwuwang.pythonanywhere.com/)
 
 - URL: https://xinwuwang.pythonanywhere.com/
 
