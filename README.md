@@ -3,6 +3,9 @@
 **Name: Xinwu Wang**  
 **Student ID: 1154492**
 
+**[GitHub]**(https://github.com/XinwuWang/2023S2-BRMM-webapp)
+**[Pythonanywhere]**(https://xinwuwang.pythonanywhere.com/)
+
 ## Web application structure
 
 ## Assumptions and design decisions
