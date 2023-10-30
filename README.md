@@ -61,7 +61,13 @@ The first assumption I made was about the dropdown list of drivers. Based on the
 The other assumption I made was about adding new drivers. Based on the brief, I understood that the Motorkhana web app I was developing needs a functionality for the admin to add new drivers. In the beginning, I was thinking about using one form with collapsible options(date of birth, caregiver selection) after clicking the radio button about the question asking if adding a junior.  
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr02.jpg "early add driver form 1")
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr01.jpg "early add driver form 2")  
-However, when I was trying to code this form and make sure data passed smoothly among, HTML templates, app.py, and MySQL database, I realised
+However, when I was trying to code this form and make sure data passed smoothly among, HTML templates, app.py, and MySQL database, I realised only after the form submitted first can data be passed to the route in 'app.py'. Therefore, I decided to use a toggled modal from BootStrap in the navigation bar to ask the admin if he/she would add a junior driver. Then I created four HTML templates for conditions of adding a new driver(aged over 25), adding a junior driver(aged 16-25), adding a junior driver(aged 12-16) who needs a caregiver, and an error message page.  
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr1.png "ask if junior")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr2.png "non juninor form")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr3.png "ask date of birth")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr4.png "aged younger than 12")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr5.png "junior aged 12-16 form")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr6.png "junior aged 16-25 form")
 
 ## Database questions
 
