@@ -105,8 +105,14 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
     (44,'BRZ','RWD')  
     ;
 
-- **Reasons why drivers and the admin access different routes, and examples of problems of everyone using the same routes**  
-  One
+- **Importance of drivers and the admin accessing different routes, and examples of problems of everyone using the same routes**
+
+  - Importance of different routes  
+    When logins are impletmented, drivers and the club admin can access different routes, as they have different needs and authorisations from the club. Users may want to view different types of event information and results, but they are not allowed and authorised by the club to edit any data displayed on the web application or add new drivers. They also need a user friendly website with great user experience when looking for and viewing information about the MotorKhana event. For the club admin, after login, he/she is verified and authorised by the club to edit run data or add new drivers if needed. The updated data will be then displayed to the public interface. The admin has a higher level of authorisation than public users. When the admin and users have their needs satisfied, their user experience will be improved, which can benefit the club itself in the end regarding interacting with different types of users.
+
+  * Examples of using the same routes
+
+  1.  Example 1
 
 ## Image sources
 
