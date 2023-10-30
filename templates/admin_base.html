@@ -18,7 +18,7 @@
 <body>
     <!-- Header indicating the current interface only available to admin-->
     <!-- Click to return to the admin dashboard -->
-    <!-- Admin can also go to the public portal clicking the link from here -->
+    <!-- Admin can also go to the driver portal clicking the link from here -->
     <nav class="navbar bg-body-secondary" data-bs-theme="light">
         <div class="container-fluid d-flex justify-content-between">
             <div>
@@ -34,7 +34,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
                     <path d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5ZM9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8Zm1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Z"/>
                     <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96c.026-.163.04-.33.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1.006 1.006 0 0 1 1 12V4Z"/>
-                  </svg> Enter User Portal
+                  </svg> Enter Driver Portal
                 </a>
             </div>
         </div>
@@ -192,11 +192,11 @@
                     <button class="btn btn-outline-secondary text-bg-dark" type="submit" data-bs-toggle="modal" data-bs-target="#checkjuniorModal">Add</button>
                 </div>
             </div>
-            <!-- Shortcut to the public interface -->
+            <!-- Shortcut to the driver interface -->
             <div class="col-md-6 py-3">
                 <div class="h-100 p-5 text-bg-dark rounded-3">
                     <h2>Log Out</h2>
-                    <p>Leave the Admin Portal and return to the User Portal.</p>
+                    <p>Leave the Admin Portal and return to the Driver Portal.</p>
                     <a href="{{ url_for('home') }}">
                         <button class="btn btn-outline-light" type="button">Leave</button>
                     </a>
