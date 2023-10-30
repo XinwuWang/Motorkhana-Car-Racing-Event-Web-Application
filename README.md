@@ -56,6 +56,8 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 ## Assumptions and design decisions
 
+The first assumption I made was about the dropdown list of drivers. Based on the description in the brief, a driver's name can be selected from this list to display a page showing their run details and run totals, including the course names, drievr ID, driver names, car model, and drive class.
+
 ## Database questions
 
 - **SQL statement creating the car table and defining its three fields**
