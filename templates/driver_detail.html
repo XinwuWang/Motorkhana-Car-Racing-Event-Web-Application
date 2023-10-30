@@ -38,8 +38,11 @@
                 <td>{{ course[1] }}</td>
                 {% endif %}{% endfor %}
                 <td>{{ run[2] }}</td>
+                {% if run[3] %}
                 <td>{{ run[3] }}</td>
-                {% if run[4] %}
+                {% else %}
+                <td></td>
+                {% endif %} {% if run[4] %}
                 <td>{{ run[4] }}</td>
                 {% else %}
                 <td></td>
@@ -47,8 +50,11 @@
                 <td>WD</td>
                 {% else %}
                 <td></td>
-                {% endif %}
+                {% endif %} {% if run[6] %}
                 <td>{{ run[6] }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
             </tr>
             {% endif %} {% endfor %}
 
