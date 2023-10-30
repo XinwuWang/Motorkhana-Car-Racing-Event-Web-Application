@@ -107,10 +107,10 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 - **Importance of accessing different routes, and examples of problems of facilities avaliable to everyone**
 
-  - Importance of different routes  
+  - **Importance of different routes**  
     When logins are impletmented, drivers and the club admin can access different routes, as they have different needs and authorisations from the club. Drivers may want to view different types of event information and results, but they are not allowed and authorised by the club to edit any data displayed on the web application or add new drivers. They also need a user friendly website with great user experience when looking for and viewing information about the MotorKhana event. For the club admin, after login, he/she is verified and authorised by the club to edit run data or add new drivers if needed. The updated data will be then displayed to the drivers' interface. The admin has a higher level of authorisation than drivers. When the admin and drivers have their needs satisfied, their user experience will be improved, which can benefit the club itself in the end regarding interacting with different types of users.
 
-  * Problems of all the web application facilities avalibale to everyone  
+  * **Problems of all the web application facilities avalibale to everyone**  
     First of all, if everyone can access all of the web application facilities, they will find it confused when using functionalities on the website. Conflicts will occur between different types of users. For example, the admin will feel frustrated if he/she could not successfully update run data as wanted, if some driver is using this function to edit run data on the other side of the computer at the same time. This can also negatively affect the accuracy of the run results. The club may also find it hard to manage new drivers' information if an existed driver adds his/her friend or family members to the database without telling the club.
 
     Besides, for safety reasons, the web application facilities cannot be avaliable to everyone, but needs appropriate authentications. If everyone can access the facilities, confidential data and sensitive information will be at a high risk of being stolen or leaked. For example, someone with malicious intentions may easily access Motorkhana drivers' personal information and use it for scams or other purposes to make profit.
