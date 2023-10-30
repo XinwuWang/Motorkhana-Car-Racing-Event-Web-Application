@@ -39,8 +39,15 @@
                 {% endif %}{% endfor %}
                 <td>{{ run[2] }}</td>
                 <td>{{ run[3] }}</td>
+                {% if run[4] %}
                 <td>{{ run[4] }}</td>
-                <td>{{ run[5] }}</td>
+                {% else %}
+                <td></td>
+                {% endif %} {% if run[5] == 1 %}
+                <td>WD</td>
+                {% else %}
+                <td></td>
+                {% endif %}
                 <td>{{ run[6] }}</td>
             </tr>
             {% endif %} {% endfor %}
