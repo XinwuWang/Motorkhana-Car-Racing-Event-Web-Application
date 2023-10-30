@@ -58,7 +58,10 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 The first assumption I made was about the dropdown list of drivers. Based on the description in the brief, a driver's name can be selected from this list to display a page showing their run details and run totals, including the course names, drievr ID, driver names, car model, and drive class. I was not sure about where this dropdown list should display first as so much information needed to be accessed after selecting a driver's name. At the early stage of my coding, I was thinking to put this dropdown box inside the 'driver list' page. However, after considering user experience, I decided to put this dropdown list in the navigation bar so users can easily select a specific driver's run data and personal details from anywhere in the driver interface. Also, on the driver list page, users can click each driver's name to access their run data. By adding the dropdown list to the navigation bar, users can conveniently reach wanted data.
 
-The other assumption I made was about adding new drivers. Based on the brief, I understood that the Motorkhana web app I was developing needs a functionality for the admin to add new drivers.
+The other assumption I made was about adding new drivers. Based on the brief, I understood that the Motorkhana web app I was developing needs a functionality for the admin to add new drivers. In the beginning, I was thinking about using one form with collapsible options(date of birth, caregiver selection) after clicking the radio button about the question asking if adding a junior.  
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr02.jpg "early add driver form 1")
+![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr01.jpg "early add driver form 2")  
+However, when I was trying to code this form and make sure data passed smoothly among, HTML templates, app.py, and MySQL database, I realised
 
 ## Database questions
 
