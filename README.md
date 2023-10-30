@@ -56,7 +56,9 @@ Successfully adding new drivers' details to the database under routes '/admin/ad
 
 ## Assumptions and design decisions
 
-The first assumption I made was about the dropdown list of drivers. Based on the description in the brief, a driver's name can be selected from this list to display a page showing their run details and run totals, including the course names, drievr ID, driver names, car model, and drive class.
+The first assumption I made was about the dropdown list of drivers. Based on the description in the brief, a driver's name can be selected from this list to display a page showing their run details and run totals, including the course names, drievr ID, driver names, car model, and drive class. I was not sure about where this dropdown list should display first as so much information needed to be accessed after selecting a driver's name. At the early stage of my coding, I was thinking to put this dropdown box inside the 'driver list' page. However, after considering user experience, I decided to put this dropdown list in the navigation bar so users can easily select a specific driver's run data and personal details from anywhere in the driver interface. Also, on the driver list page, users can click each driver's name to access their run data. By adding the dropdown list to the navigation bar, users can conveniently reach wanted data.
+
+The other assumption I made was about adding new drivers. Based on the brief, I understood that the Motorkhana web app I was developing needs a functionality for the admin to add new drivers.
 
 ## Database questions
 
