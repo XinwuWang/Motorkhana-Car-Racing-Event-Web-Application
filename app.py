@@ -33,7 +33,7 @@ def getCursor():
     return dbconn
 
 
-### Routes for public interfaces start here ###
+### Routes for public(driver) interfaces start here ###
 # Public: homepage
 @app.route("/")
 def home():
