@@ -36,9 +36,11 @@
                 {% elif loop.index == 7 %}
                 <!-- Skip caregiver's id and not display it in the frontend, so leave here blank -->
                 <!-- continue -->
-                {% else %}
+                {% else %} {% if item %}
                 <td>{{ item }}</td>
-                {% endif %} {% endfor %}
+                {% else %}
+                <td></td>
+                {% endif %} {% endif %} {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
