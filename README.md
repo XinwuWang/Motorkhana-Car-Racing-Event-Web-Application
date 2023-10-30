@@ -68,6 +68,7 @@ However, when I was trying to code this form and make sure data passed smoothly 
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr4.png "aged younger than 12")
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr5.png "junior aged 12-16 form")
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr6.png "junior aged 16-25 form")
+By doing this, the admin can access to different adding a new driver form. After different forms are submitted, the routes in 'app.py' will capture the admin's input and send the data to MySQL database. These forms containg different <input> have different validations.
 
 ## Database questions
 
