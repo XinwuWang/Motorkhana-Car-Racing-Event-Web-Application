@@ -70,6 +70,8 @@ However, when I was trying to code this form and make sure data passed smoothly 
 ![alt text](https://github.com/XinwuWang/2023S2-BRMM-webapp/blob/main/readme_images/add_dr6.png "junior aged 16-25 form")
 By doing this, the admin can access to different adding a new driver form. After different forms are submitted, the routes in 'app.py' will capture the admin's input and send the data to MySQL database. These forms containg different <input> have different validations.
 
+In addition, I used [BootStrap](https://getbootstrap.com/) when designing my web application to present user friendly interfaces for drivers and the admin.I used model for editing run data and entering the admin portal from the driver portal. I used alerts boxes for giving feedback to the admin after successfully updating run data or adding a new user. In this way, I could avoid writing more HTML templates which may only contain a few information. As for the colour theme and fonts, I used black and white as main colours for my web application and same fonts and sizes for different headers and body parts. As a result, my web application can present a professional consistant look to users.
+
 ## Database questions
 
 - **SQL statement creating the car table and defining its three fields**
