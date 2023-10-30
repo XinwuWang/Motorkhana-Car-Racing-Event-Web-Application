@@ -61,10 +61,23 @@
                 <td>{{ course[1] }}</td>
                 {% endif %} {% endfor %}
                 <td>{{ run[2] }}</td>
+                {% if run[3] %}
                 <td>{{ run[3] }}</td>
+                {% else %}
+                <td></td>
+                {% endif %} {% if run[4] %}
                 <td>{{ run[4] }}</td>
-                <td>{{ run[5] }}</td>
+                {% else %}
+                <td></td>
+                {% endif %} {% if run[5] == 1 %}
+                <td>WD</td>
+                {% else %}
+                <td></td>
+                {% endif %} {% if run[6] %}
                 <td>{{ run[6] }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
                 <!-- Button trigger modal for Admin to edit run data -->
                 <!-- ID should be unique. So add 'run[1]-course name' and 'run[2]-run number' to 'data-bs-target' and modal ID. -->
                 <td><button type="button" class="btn btn-secondary btn-sm text-bg-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ run[1]}}{{ run[2] }}">
