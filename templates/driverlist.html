@@ -40,7 +40,11 @@
                     </td>
                     <td>{{ driver[3] }}</td>
                     <td>{{ driver[4] }}</td>
+                    {% if driver[5] %}
                     <td>{{ driver[5] }}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                     <td>{{ driver[6] }}</td>
                     <td>{{ driver[7] }}</td>
                 </tr>
